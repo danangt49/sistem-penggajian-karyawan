@@ -19,11 +19,7 @@ class KaryawanController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin')) {
-            return view('master.karyawan.home');
-        } else {
-             return view('error.404');
-        }
+        return view('master.karyawan.home');
     }
 
     public function json()
@@ -64,7 +60,7 @@ class KaryawanController extends Controller
         if (Gate::allows('isAdmin')) {
             return view('master.karyawan.create');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -85,7 +81,7 @@ class KaryawanController extends Controller
             Karyawan::create($data);
             return redirect('master/karyawan')->with('success', 'Data Sukses Ditambahkan');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -95,7 +91,7 @@ class KaryawanController extends Controller
             $data['karyawan'] = Karyawan::where('nip', $nip)->first();
             return view('master.karyawan.edit')->with($data);
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -116,7 +112,7 @@ class KaryawanController extends Controller
             Karyawan::where('nip', $request->nip)->update($data);
             return redirect('master/karyawan')->with('success', 'Data Sukses Diperbarui');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -127,7 +123,7 @@ class KaryawanController extends Controller
             $data->delete();
             return redirect('master/karyawan');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 }

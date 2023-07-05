@@ -12,17 +12,17 @@ class DetailGaji extends Model
         'kd_tunjangan_skill',
         'kd_kasbon',
         'kd_lembur',
-        'kd_presensi',
+        'kd_kehadiran',
         'jumlah_potongan',
         'potongan_perhari',
         'sub_total_tunjangan_skill',
         'sub_total_lembur',
         'sub_total_kasbon',
-        'sub_total_Presensi',
+        'sub_total_kehadiran',
         'sub_jumlah_tunjangan',
         'sub_jumlah_lembur',
         'sub_jumlah_kasbon',
-        'sub_jumlah_Presensi',
+        'sub_jumlah_kehadiran',
     ];
 
     protected $table = 'detail_gajis';
@@ -43,7 +43,7 @@ class DetailGaji extends Model
         return $this->belongsTo('App\Models\Lembur', 'kd_lembur', 'kd_lembur');
     }
     
-    public function presensi(){
-        return $this->belongsTo('App\Models\Presensi', 'kd_presensi', 'kd_presensi');
+    public function kehadiran(){
+        return $this->belongsTo('App\Models\Kehadiran', 'kd_kehadiran', 'kd_kehadiran');
     }
 }

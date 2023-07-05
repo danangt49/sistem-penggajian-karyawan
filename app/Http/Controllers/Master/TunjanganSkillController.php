@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 
 use App\Models\TunjanganSkill;
@@ -26,6 +27,9 @@ class TunjanganSkillController extends Controller
         $data = TunjanganSkill::orderBy('created_at', 'DESC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
+            ->addColumn('jumlah_tunjangan_skill', function ($row) {
+                return Sistem::formatRupiah($row->jumlah_tunjangan_skill);
+            })
             ->addColumn('action', function ($row) {
                 $btn1 = '';
                 $btn2 =

@@ -19,22 +19,22 @@ class CreateDetailGajisTable extends Migration
             $table->unsignedInteger('kd_tunjangan_skill');
             $table->unsignedInteger('kd_kasbon');
             $table->unsignedInteger('kd_lembur');
-            $table->unsignedInteger('kd_presensi');
+            $table->unsignedInteger('kd_kehadiran');
             $table->integer('sub_total_tunjangan_skill');
             $table->integer('sub_total_lembur');
             $table->integer('sub_total_kasbon');
-            $table->integer('sub_total_Presensi');
+            $table->integer('sub_total_kehadiran');
             $table->integer('sub_jumlah_tunjangan');
             $table->integer('sub_jumlah_lembur');
             $table->integer('sub_jumlah_kasbon');
-            $table->integer('sub_jumlah_Presensi');
+            $table->integer('sub_jumlah_kehadiran');
             $table->timestamps();
 
             $table->foreign('no_slip_gaji')->references('no_slip_gaji')->on('gajis')->onDelete('cascade');  
             $table->foreign('kd_tunjangan_skill')->references('kd_tunjangan_skill')->on('tunjangan_skills')->onDelete('cascade');  
             $table->foreign('kd_lembur')->references('kd_lembur')->on('lemburs')->onDelete('cascade');  
             $table->foreign('kd_kasbon')->references('kd_kasbon')->on('kasbons')->onDelete('cascade');  
-            $table->foreign('kd_presensi')->references('kd_presensi')->on('presensis')->onDelete('cascade');  
+            $table->foreign('kd_kehadiran')->references('kd_kehadiran')->on('kehadirans')->onDelete('cascade');  
 
         });
     }

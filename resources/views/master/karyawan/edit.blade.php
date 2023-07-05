@@ -36,7 +36,7 @@
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="nip">NIP</label>
-                                                        <input type="number" class="form-control" id="nip" name="nip" value="{{ $karyawan->nip }}" readonly>
+                                                        <input type="number" class="form-control" id="nip" name="nip" value="{{ $karyawan->nip }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">

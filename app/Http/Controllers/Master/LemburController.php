@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 
 use App\Models\Lembur;
@@ -26,6 +27,12 @@ class LemburController extends Controller
         $data = Lembur::orderBy('created_at', 'DESC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
+            ->addColumn('biaya_lembur_perjam', function ($row) {
+                return Sistem::formatRupiah($row->biaya_lembur_perjam);
+            })
+            ->addColumn('total_pendapatan_lembur', function ($row) {
+                return Sistem::formatRupiah($row->total_pendapatan_lembur);
+            })
             ->addColumn('action', function ($row) {
                 $btn1 = '';
                 $btn2 =

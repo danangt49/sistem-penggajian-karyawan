@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Sistem;
 use App\Libraries\Applib;
-use App\Models\Presensi;
+use App\Models\Kehadiran;
 use App\Models\DetailGaji;
 use App\Models\Gaji;
 use App\Models\Karyawan;
@@ -102,7 +102,7 @@ class GajiController extends Controller
     {
         if (Gate::allows('isAdmin')) {
             $slip_gaji = random_int(1000, 9999);
-            $kd_presensi = random_int(1, 9999);
+            $kd_kehadiran = random_int(1, 9999);
 
             $gaji = Karyawan::where('nip', $request->nip)->first();
             $tunjangan = TunjanganSkill::where('kd_tunjangan_skill', $request->kd_tunjangan_skill)->first();
@@ -110,7 +110,7 @@ class GajiController extends Controller
             $kasbon = Kasbon::where('kd_kasbon', $request->kd_kasbon)->first();
             $gaji = Karyawan::where('nip', $request->nip)->first();
 
-            $total = ($request->jumlah_presensi / $request->jumlah_hari_kerja_kalender) * $gaji->gaji_pokok;
+            $total = ($request->jumlah_kehadiran / $request->jumlah_hari_kerja_kalender) * $gaji->gaji_pokok;
             $gaji_bersih = $total + $tunjangan->jumlah_tunjangan_skill + $lembur->total_pendapatan_lembur - $kasbon->jumlah_kasbon;
 
             $data = [
@@ -128,8 +128,8 @@ class GajiController extends Controller
             ];
 
             $data2 = [
-                'kd_presensi' => $kd_presensi,
-                'jumlah_presensi' => $request->jumlah_presensi,
+                'kd_kehadiran' => $kd_kehadiran,
+                'jumlah_kehadiran' => $request->jumlah_kehadiran,
                 'jumlah_hari_kerja_kalender' => $request->jumlah_hari_kerja_kalender,
                 'total_gaji' => $total,
             ];
@@ -139,19 +139,19 @@ class GajiController extends Controller
                 'kd_tunjangan_skill' => $request->kd_tunjangan_skill,
                 'kd_kasbon' => $request->kd_kasbon,
                 'kd_lembur' => $request->kd_lembur,
-                'kd_presensi' => $kd_presensi,
+                'kd_kehadiran' => $kd_kehadiran,
                 'sub_total_tunjangan_skill' => $tunjangan->jumlah_tunjangan_skill,
                 'sub_total_lembur' => $lembur->total_pendapatan_lembur,
                 'sub_total_kasbon' => $kasbon->jumlah_kasbon,
-                'sub_total_Presensi' => $total,
+                'sub_total_kehadiran' => $total,
                 'sub_jumlah_tunjangan' => 1,
                 'sub_jumlah_lembur' => $lembur->jumlah_jam_lembur,
                 'sub_jumlah_kasbon' => 1,
-                'sub_jumlah_Presensi' => $request->jumlah_presensi,
+                'sub_jumlah_kehadiran' => $request->jumlah_kehadiran,
             ];
 
             Gaji::create($data);
-            Presensi::create($data2);
+            Kehadiran::create($data2);
             DetailGaji::create($data3);
             return redirect('gaji')->with('success', 'Data Sukses Ditambahkan');
         } else {
@@ -172,7 +172,6 @@ class GajiController extends Controller
     public function update(Request $request)
     {
         if (Gate::allows('isAdmin')) {
-            // dd($request);
 
             $gaji = Karyawan::where('nip', $request->nip)->first();
             $tunjangan = TunjanganSkill::where('kd_tunjangan_skill', $request->kd_tunjangan_skill)->first();
@@ -180,7 +179,7 @@ class GajiController extends Controller
             $kasbon = Kasbon::where('kd_kasbon', $request->kd_kasbon)->first();
             $gaji = Karyawan::where('nip', $request->nip)->first();
 
-            $total = ($request->jumlah_presensi / $request->jumlah_hari_kerja_kalender) * $gaji->gaji_pokok;
+            $total = ($request->jumlah_kehadiran / $request->jumlah_hari_kerja_kalender) * $gaji->gaji_pokok;
             $gaji_bersih = $total + $tunjangan->jumlah_tunjangan_skill + $lembur->total_pendapatan_lembur - $kasbon->jumlah_kasbon;
 
             $data = [
@@ -198,7 +197,7 @@ class GajiController extends Controller
             ];
 
             $data2 = [
-                'jumlah_presensi' => $request->jumlah_presensi,
+                'jumlah_kehadiran' => $request->jumlah_kehadiran,
                 'jumlah_hari_kerja_kalender' => $request->jumlah_hari_kerja_kalender,
                 'total_gaji' => $total,
             ];
@@ -208,19 +207,19 @@ class GajiController extends Controller
                 'kd_tunjangan_skill' => $request->kd_tunjangan_skill,
                 'kd_kasbon' => $request->kd_kasbon,
                 'kd_lembur' => $request->kd_lembur,
-                'kd_presensi' => $request->kd_presensi,
+                'kd_kehadiran' => $request->kd_kehadiran,
                 'sub_total_tunjangan_skill' => $tunjangan->jumlah_tunjangan_skill,
                 'sub_total_lembur' => $lembur->total_pendapatan_lembur,
                 'sub_total_kasbon' => $kasbon->jumlah_kasbon,
-                'sub_total_Presensi' => $total,
+                'sub_total_kehadiran' => $total,
                 'sub_jumlah_tunjangan' => 1,
                 'sub_jumlah_lembur' => $lembur->jumlah_jam_lembur,
                 'sub_jumlah_kasbon' => 1,
-                'sub_jumlah_Presensi' => $request->jumlah_presensi,
+                'sub_jumlah_kehadiran' => $request->jumlah_kehadiran,
             ];
 
             Gaji::where('no_slip_gaji', $request->no_slip_gaji)->update($data);
-            Presensi::where('kd_presensi', $request->kd_presensi)->update($data2);
+            Kehadiran::where('kd_kehadiran', $request->kd_kehadiran)->update($data2);
             DetailGaji::where('id_detail_gaji', $request->id_detail_gaji)->update($data3);
             return redirect('gaji')->with('success', 'Data Updated successfully');
         } else {

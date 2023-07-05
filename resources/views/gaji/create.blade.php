@@ -90,8 +90,8 @@
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
-                                                        <label for="jumlah_presensi">Jumlah Kehadiran</label>
-                                                        <input type="number" class="form-control" id="jumlah_presensi" name="jumlah_presensi">
+                                                        <label for="jumlah_kehadiran">Jumlah Kehadiran</label>
+                                                        <input type="number" class="form-control" id="jumlah_kehadiran" name="jumlah_kehadiran">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
@@ -166,7 +166,7 @@
                 kd_lembur: {
                     required: true,
                 },
-                jumlah_presensi: {
+                jumlah_kehadiran: {
                     required: true,
                     number:true
                 },
@@ -194,7 +194,7 @@
                 nip: {
                     required: "Nama Karyawan Harus Di isi!",
                 },
-                jumlah_presensi: {
+                jumlah_kehadiran: {
                     required: "Jumlah Kehadiran Harus Di isi!",
                     number: "Harus Berupa Angka"
                 },

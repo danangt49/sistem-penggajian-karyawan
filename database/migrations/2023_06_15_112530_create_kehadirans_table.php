@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePresensisTable extends Migration
+class CreateKehadiransTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreatePresensisTable extends Migration
      */
     public function up()
     {
-        Schema::create('presensis', function (Blueprint $table) {
-            $table->increments('kd_presensi');
-            $table->string('jumlah_presensi');
+        Schema::create('kehadirans', function (Blueprint $table) {
+            $table->increments('kd_kehadiran');
+            $table->string('jumlah_kehadiran');
             $table->integer('jumlah_hari_kerja_kalender');
             $table->integer('total_gaji');
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreatePresensisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('presensis');
+        Schema::dropIfExists('kehadirans');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 
 use App\Models\Kasbon;
@@ -26,6 +27,10 @@ class KasbonController extends Controller
         $data = Kasbon::orderBy('created_at', 'DESC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
+            ->addColumn('jumlah_kasbon', function ($row) {
+                return Sistem::formatRupiah($row->jumlah_kasbon);
+            })
+
             ->addColumn('action', function ($row) {
                 $btn1 = '';
                 $btn2 =
@@ -52,7 +57,7 @@ class KasbonController extends Controller
         if (Gate::allows('isAdmin')) {
             return view('master.kasbon.create');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -69,7 +74,7 @@ class KasbonController extends Controller
             Kasbon::create($data);
             return redirect('master/kasbon')->with('success', 'Data Sukses Ditambahkan');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -79,7 +84,7 @@ class KasbonController extends Controller
             $data['kasbon'] = Kasbon::where('kd_kasbon', $kd_kasbon)->first();
             return view('master.kasbon.edit')->with($data);
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -96,7 +101,7 @@ class KasbonController extends Controller
             Kasbon::where('kd_kasbon', $request->kd_kasbon)->update($data);
             return redirect('master/kasbon')->with('success', 'Data Sukses Diperbarui');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -107,7 +112,7 @@ class KasbonController extends Controller
             $data->delete();
             return redirect('master/kasbon');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 }

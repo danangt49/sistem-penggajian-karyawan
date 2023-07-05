@@ -85,10 +85,10 @@
                                                         <td>{{ $detail->nip }}</td>
                                                         <td>{{ $detail->karyawan->nm_pegawai }}</td>
                                                         <td>{{ Sistem::formatRupiah($detail->total_gaji_pokok) }}</td>
-                                                        <td>{{ $detail->detailGaji->Presensi->jumlah_presensi }} /
-                                                            {{ $detail->detailGaji->Presensi->jumlah_hari_kerja_kalender }}
+                                                        <td>{{ $detail->detailGaji->kehadiran->jumlah_kehadiran }} /
+                                                            {{ $detail->detailGaji->kehadiran->jumlah_hari_kerja_kalender }}
                                                         </td>
-                                                        <td>{{ Sistem::formatRupiah($detail->detailGaji->presensi->total_gaji) }}
+                                                        <td>{{ Sistem::formatRupiah($detail->detailGaji->kehadiran->total_gaji) }}
                                                         </td>
                                                         <td>{{ $detail->detailGaji->tunjangan->nm_tunjangan_skill }}</td>
                                                         <td>{{ $detail->detailGaji->lembur->jumlah_jam_lembur }}/

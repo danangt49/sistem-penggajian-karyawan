@@ -11,16 +11,20 @@
 <body>
     <style type="text/css">
         .tgl {
-            font-size: 7pt;
+            font-size: 6pt;
         }
 
         .invoice-col {
-            font-size: 7pt;
+            font-size: 6pt;
         }
 
+        .page-header {
+            text-align: center
+        }
+        
         table tr td,
         table tr th {
-            font-size: 7pt;
+            font-size: 6pt;
             text-align: center
         }
     </style>
@@ -29,9 +33,7 @@
             <div class="row">
                 <div class="col-12">
                     <h2 class="page-header">
-                        <i class="fas fa-globe"></i>Riwayat Penggajian PT Gasaba Sukses Mandiri
-                        <small class="float-right tgl">Tanggal :
-                            {{ Sistem::konversiTanggal(\Carbon\Carbon::now()) }}</small>
+                        <i class="fas fa-globe"></i>Riwayat Penggajian Karyawan <br> PT Gasaba Sukses Mandiri
                     </h2>
                 </div>
             </div>
@@ -41,7 +43,8 @@
                     <address>
                         <strong>{{ Auth::user()->name }}</strong><br>
                         Gedeg, Kec. Comal, Kab. Pemalang, Jawa Tengah<br>
-                        No. Telp : 0815-4029-619
+                        No. Telp : 0815-4029-619 <br>
+                        Tanggal : {{ Sistem::konversiTanggal(\Carbon\Carbon::now()) }}
                     </address>
                 </div>
             </div>
@@ -70,9 +73,9 @@
                                     <td>{{ $item->nip }}</td>
                                     <td>{{ $item->karyawan->nm_pegawai }}</td>
                                     <td>{{ Sistem::formatRupiah($item->total_gaji_pokok) }}</td>
-                                    <td>{{ $item->detailGaji->Presensi->jumlah_presensi }} /
-                                        {{ $item->detailGaji->Presensi->jumlah_hari_kerja_kalender }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->detailGaji->presensi->total_gaji) }}</td>
+                                    <td>{{ $item->detailGaji->kehadiran->jumlah_kehadiran }} /
+                                        {{ $item->detailGaji->kehadiran->jumlah_hari_kerja_kalender }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->detailGaji->kehadiran->total_gaji) }}</td>
                                     <td>{{ $item->detailGaji->tunjangan->nm_tunjangan_skill }}</td>
                                     <td>{{ $item->detailGaji->lembur->jumlah_jam_lembur }}/{{ Sistem::formatRupiah($item->detailGaji->lembur->biaya_lembur_perjam) }}
                                     </td>
