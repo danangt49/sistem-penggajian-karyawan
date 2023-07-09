@@ -113,7 +113,7 @@
                                             </div>
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                                                <a href="{{ url('master/gaji') }}" class="btn btn-secondary">Batal</a>
+                                                <a href="{{ url('gaji') }}" class="btn btn-secondary">Batal</a>
                                             </div>
                                         </div>
                                     </form>
