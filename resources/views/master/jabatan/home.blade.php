@@ -32,10 +32,14 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">Data Jabatan</h3>
-                                       @if (Auth::user()->level == 'admin')
+                                        @if (Auth::user()->level == 'admin')
                                             <a href="{{ url('master/jabatan/form') }}"
                                                 class="btn btn-primary float-right"><i class="fas fa-plus"></i> Tambah</a>
                                         @endif
+
+                                        <a href="{{ url('master/jabatan-cetak-all-pdf') }}"
+                                            class="btn btn-success float-right" style="margin-right: 10px;"><i
+                                                class="fas fa-print"></i> Cetak</a>
                                     </div>
                                     <div class="card-body">
                                         <table id="datatable" class="table table-bordered table-striped text-center">
@@ -88,7 +92,7 @@
                         title: 'Nama Jabatan',
                         data: 'nm_jabatan'
                     },
-                   @if (Auth::user()->level == 'admin')
+                    @if (Auth::user()->level == 'admin')
                         {
                             title: 'Action',
                             data: 'action',

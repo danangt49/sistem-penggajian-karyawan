@@ -6,8 +6,10 @@ use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 
 use App\Models\TunjanganSkill;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use PDF;
 use Yajra\DataTables\Facades\DataTables;
 
 class TunjanganSkillController extends Controller
@@ -113,5 +115,13 @@ class TunjanganSkillController extends Controller
         } else {
              return view('error.404');
         }
+    }
+
+    public function cetak_all()
+    {
+        $all = TunjanganSkill::get();
+
+        $pdf = PDF::loadview('master/tunjangan/cetak-all', ['all' => $all]);
+        return $pdf->download('Keseluruhan Data Tunjangan Skill ' . Sistem::konversiTanggal(Carbon::now()));
     }
 }

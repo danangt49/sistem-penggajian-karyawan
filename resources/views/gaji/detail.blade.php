@@ -46,9 +46,9 @@
                                         <div class="col-sm-4 invoice-col">
                                             Untuk
                                             <address>
-                                                <strong>{{ $detail->karyawan->nm_pegawai }}</strong><br>
-                                                {{ $detail->karyawan->alamat }}<br>
-                                                No. Telp : {{ $detail->karyawan->no_telepon }}
+                                                <strong>{{ $detail->pegawai->nm_pegawai }}</strong><br>
+                                                {{ $detail->pegawai->alamat }}<br>
+                                                No. Telp : {{ $detail->pegawai->no_telepon }}
                                             </address>
                                         </div>
 
@@ -63,27 +63,27 @@
 
                                     <div class="row">
                                         <div class="col-12 table-responsive">
-                                            <table class="table table-striped">
+                                            <table class="table table-bordered">
                                                 <thead>
                                                     <tr align="center">
                                                         <th>NIP</th>
                                                         <th>Nama</th>
-                                                        <th>Gaji Pokok</th>
+                                                        <th>Gaji Pokok  (Rp.)</th>
                                                         <th>Jumlah Kehadiran/Dari (Hari)</th>
-                                                        <th>Gaji Berdasarkan Kehadiran</th>
+                                                        <th>Gaji Berdasarkan Kehadiran (Rp.)</th>
                                                         <th>Tunjangan Skill</th>
-                                                        <th>Jumlah Lembur(Jam)/Rp.</th>
+                                                        <th>Jumlah Lembur Jam/Rp.</th>
                                                         <th>Kasbon</th>
-                                                        <th>Total Tunjangan Skill</th>
-                                                        <th>Total Lembur</th>
-                                                        <th>Total Kasbon</th>
-                                                        <th>Gaji Bersih</th>
+                                                        <th>Total Tunjangan Skill (Rp.)</th>
+                                                        <th>Total Lembur (Rp.)</th>
+                                                        <th>Total Kasbon (Rp.)</th>
+                                                        <th>Gaji Bersih (Rp.)</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr align="center">
                                                         <td>{{ $detail->nip }}</td>
-                                                        <td>{{ $detail->karyawan->nm_pegawai }}</td>
+                                                        <td>{{ $detail->pegawai->nm_pegawai }}</td>
                                                         <td>{{ Sistem::formatRupiah($detail->total_gaji_pokok) }}</td>
                                                         <td>{{ $detail->detailGaji->kehadiran->jumlah_kehadiran }} /
                                                             {{ $detail->detailGaji->kehadiran->jumlah_hari_kerja_kalender }}
@@ -107,12 +107,11 @@
                                             </table>
                                         </div>
                                     </div>
-
                                     <div class="row no-print">
                                         <div class="col-12">
                                             <a href="{{ url('gaji-cetak-pdf/' . $detail->no_slip_gaji) }}" rel="noopener"
-                                                target="_blank" class="btn btn-default"><i class="fas fa-print"></i>
-                                                Print</a>
+                                                target="_blank" class="btn btn-success float-right"><i class="fas fa-print"></i>
+                                                Cetak</a>
                                             </button>
                                         </div>
                                     </div>

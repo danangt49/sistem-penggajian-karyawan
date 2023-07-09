@@ -6,7 +6,7 @@ use App\Http\Controllers\Master\KasbonController;
 use App\Http\Controllers\Master\LemburController;
 use App\Http\Controllers\Master\TunjanganSkillController;
 use App\Http\Controllers\Master\JabatanController;
-use App\Http\Controllers\Master\KaryawanController;
+use App\Http\Controllers\Master\PegawaiController;
 use App\Http\Controllers\Master\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +31,8 @@ Route::get('/profil', [App\Http\Controllers\HomeController::class, 'profil'])->n
 Route::post('/profil-update/{id}', [UserController::class, 'updateProfile'])->name('updateProfile');
 Route::post('/password-update/{id}', [UserController::class, 'updatePassword'])->name('updatePassword');
 Route::get('/bar-chart',  [App\Http\Controllers\HomeController::class, 'cart'])->name('cart');
+Route::get('/download',  [App\Http\Controllers\HomeController::class, 'download'])->name('download');
+Route::get('download/{start_date}/{end_date}', [App\Http\Controllers\HomeController::class, 'download']);
 
 Route::get('/gaji', [GajiController::class, 'index'])->name('gaji');
 Route::get('/json-gaji', [GajiController::class, 'json'])->name('json-data');
@@ -51,6 +53,7 @@ Route::prefix('master')->group(function () {
     Route::get('/user/{id}', [UserController::class, 'edit'])->name('edit');
     Route::post('/user-update/{id}', [UserController::class, 'update'])->name('update');
     Route::get('/user-delete/{id}', [UserController::class, 'delete'])->name('delete');
+    Route::get('/user-cetak-all-pdf', [UserController::class, 'cetak_all'])->name('user-cetak-all-pdf');
 
     Route::get('/jabatan', [JabatanController::class, 'index'])->name('jabatan');
     Route::get('/json-jabatan', [JabatanController::class, 'json'])->name('json-data');
@@ -59,14 +62,16 @@ Route::prefix('master')->group(function () {
     Route::get('/jabatan/{kd_jabatan}', [JabatanController::class, 'edit'])->name('edit');
     Route::post('/jabatan-update/{kd_jabatan}', [JabatanController::class, 'update'])->name('update');
     Route::get('/jabatan-delete/{kd_jabatan}', [JabatanController::class, 'delete'])->name('delete');
+    Route::get('/jabatan-cetak-all-pdf', [JabatanController::class, 'cetak_all'])->name('jabatan-cetak-all-pdf');
 
-    Route::get('/karyawan', [KaryawanController::class, 'index'])->name('karyawan');
-    Route::get('/json-karyawan', [KaryawanController::class, 'json'])->name('json-data');
-    Route::get('/karyawan/form', [KaryawanController::class, 'create'])->name('create');
-    Route::post('/karyawan-store', [KaryawanController::class, 'store'])->name('store');
-    Route::get('/karyawan/{nip}', [KaryawanController::class, 'edit'])->name('edit');
-    Route::post('/karyawan-update/{nip}', [KaryawanController::class, 'update'])->name('update');
-    Route::get('/karyawan-delete/{nip}', [KaryawanController::class, 'delete'])->name('delete');
+    Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai');
+    Route::get('/json-pegawai', [PegawaiController::class, 'json'])->name('json-data');
+    Route::get('/pegawai/form', [PegawaiController::class, 'create'])->name('create');
+    Route::post('/pegawai-store', [PegawaiController::class, 'store'])->name('store');
+    Route::get('/pegawai/{nip}', [PegawaiController::class, 'edit'])->name('edit');
+    Route::post('/pegawai-update/{nip}', [PegawaiController::class, 'update'])->name('update');
+    Route::get('/pegawai-delete/{nip}', [PegawaiController::class, 'delete'])->name('delete');
+    Route::get('/pegawai-cetak-all-pdf', [PegawaiController::class, 'cetak_all'])->name('pegawai-cetak-all-pdf');
 
     Route::get('/kasbon', [KasbonController::class, 'index'])->name('kasbon');
     Route::get('/json-kasbon', [KasbonController::class, 'json'])->name('json-data');
@@ -75,6 +80,7 @@ Route::prefix('master')->group(function () {
     Route::get('/kasbon/{kd_kasbon}', [KasbonController::class, 'edit'])->name('edit');
     Route::post('/kasbon-update/{kd_kasbon}', [KasbonController::class, 'update'])->name('update');
     Route::get('/kasbon-delete/{kd_kasbon}', [KasbonController::class, 'delete'])->name('delete');
+    Route::get('/kasbon-cetak-all-pdf', [KasbonController::class, 'cetak_all'])->name('kasbon-cetak-all-pdf');
 
     Route::get('/lembur', [LemburController::class, 'index'])->name('lembur');
     Route::get('/json-lembur', [LemburController::class, 'json'])->name('json-data');
@@ -83,6 +89,7 @@ Route::prefix('master')->group(function () {
     Route::get('/lembur/{kd_lembur}', [LemburController::class, 'edit'])->name('edit');
     Route::post('/lembur-update/{kd_lembur}', [LemburController::class, 'update'])->name('update');
     Route::get('/lembur-delete/{kd_lembur}', [LemburController::class, 'delete'])->name('delete');
+    Route::get('/lembur-cetak-all-pdf', [LemburController::class, 'cetak_all'])->name('lembur-cetak-all-pdf');
 
     Route::get('/tunjangan-skill', [TunjanganSkillController::class, 'index'])->name('tunjangan-skill');
     Route::get('/json-tunjangan-skill', [TunjanganSkillController::class, 'json'])->name('json-data');
@@ -91,5 +98,6 @@ Route::prefix('master')->group(function () {
     Route::get('/tunjangan-skill/{kd_tunjangan_skill}', [TunjanganSkillController::class, 'edit'])->name('edit');
     Route::post('/tunjangan-skill-update/{kd_tunjangan_skill}', [TunjanganSkillController::class, 'update'])->name('update');
     Route::get('/tunjangan-skill-delete/{kd_tunjangan_skill}', [TunjanganSkillController::class, 'delete'])->name('delete');
+    Route::get('/tunjangan-skill-cetak-all-pdf', [TunjanganSkillController::class, 'cetak_all'])->name('tunjangan-skill-cetak-all-pdf');
 });
 

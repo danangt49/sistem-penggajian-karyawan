@@ -3,7 +3,7 @@
 namespace App\Libraries;
 
 use App\Models\Jabatan;
-use App\Models\Karyawan;
+use App\Models\Pegawai;
 use App\Models\Kasbon;
 use App\Models\Lembur;
 use App\Models\TunjanganSkill;
@@ -21,9 +21,9 @@ class Applib
 		return $dd;
 	}
 
-	public static function dd_karyawan(){
-		$query                          = Karyawan::get();
-		$dd['']                         = '=== Pilih Karyawan ===';
+	public static function dd_pegawai(){
+		$query                          = Pegawai::get();
+		$dd['']                         = '=== Pilih Pegawai ===';
 		if ($query->count() > 0){
 			foreach($query as $row){
 				$dd[$row->nip] = $row->nm_pegawai;
@@ -78,7 +78,7 @@ class Applib
 	}
 
 	public static function getNama($nip){
-		$query                          = Karyawan::where('nip', $nip)->get();
+		$query                          = Pegawai::where('nip', $nip)->get();
 		if($query->count() > 0){
 			foreach($query as $h){
 				$hasil = $h->nm_pegawai;

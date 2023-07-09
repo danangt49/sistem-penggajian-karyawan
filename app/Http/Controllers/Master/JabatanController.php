@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 use App\Models\Jabatan;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use PDF;
 use Yajra\DataTables\Facades\DataTables;
 
 class JabatanController extends Controller
@@ -97,5 +100,13 @@ class JabatanController extends Controller
         } else {
              return view('error.404');
         }
+    }
+
+    public function cetak_all()
+    {
+        $all = Jabatan::get();
+
+        $pdf = PDF::loadview('master/jabatan/cetak-all', ['all' => $all]);
+        return $pdf->download('Keseluruhan Data Jabatan ' . Sistem::konversiTanggal(Carbon::now()));
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistem Pengajian Karyawan</title>
+    <title>Sistem Penggajian Pegawai</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
@@ -28,11 +28,11 @@
         <section class="invoice">
             <div class="row">
                 <div class="col-12">
-                    <h2 class="page-header">
+                    <h4 class="page-header">
                         <i class="fas fa-globe"></i> PT Gasaba Sukses Mandiri
                         <small class="float-right tgl">Tanggal :
                             {{ Sistem::konversiTanggal(\Carbon\Carbon::now()) }}</small>
-                    </h2>
+                    </h4>
                 </div>
             </div>
 
@@ -48,9 +48,9 @@
                 <div class="col-sm-4 invoice-col">
                     Untuk
                     <address>
-                        <strong>{{ $detail->karyawan->nm_pegawai }}</strong><br>
-                        {{ $detail->karyawan->alamat }}<br>
-                        No. Telp : {{ $detail->karyawan->no_telepon }}
+                        <strong>{{ $detail->pegawai->nm_pegawai }}</strong><br>
+                        {{ $detail->pegawai->alamat }}<br>
+                        No. Telp : {{ $detail->pegawai->no_telepon }}
                     </address>
                 </div>
                 <div class="col-sm-4 invoice-col">
@@ -61,28 +61,28 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 table-responsive">
-                    <table class="table table-striped">
+                <div class="col-12">
+                    <table class="table table-bordered">
                         <thead>
                             <tr align="center">
                                 <th>NIP</th>
                                 <th>Nama</th>
-                                <th>Gaji Pokok</th>
+                                <th>Gaji Pokok (Rp.)</th>
                                 <th>Jumlah Kehadiran/Dari (Hari)</th>
-                                <th>Gaji Berdasarkan Kehadiran</th>
+                                <th>Gaji Berdasarkan Kehadiran (Rp.)</th>
                                 <th>Tunjangan Skill</th>
-                                <th>Jumlah Lembur(Jam)/Rp.</th>
+                                <th>Jumlah Lembur Jam/Rp.</th>
                                 <th>Kasbon</th>
-                                <th>Total Tunjangan Skill</th>
-                                <th>Total Lembur</th>
-                                <th>Total Kasbon</th>
-                                <th>Gaji Bersih</th>
+                                <th>Total Tunjangan Skill (Rp.)</th>
+                                <th>Total Lembur (Rp.)</th>
+                                <th>Total Kasbon (Rp.)</th>
+                                <th>Gaji Bersih (Rp.)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr align="center">
                                 <td>{{ $detail->nip }}</td>
-                                <td>{{ $detail->karyawan->nm_pegawai }}</td>
+                                <td>{{ $detail->pegawai->nm_pegawai }}</td>
                                 <td>{{ Sistem::formatRupiah($detail->total_gaji_pokok) }}</td>
                                 <td>{{ $detail->detailGaji->kehadiran->jumlah_kehadiran }} /
                                     {{ $detail->detailGaji->kehadiran->jumlah_hari_kerja_kalender }}</td>

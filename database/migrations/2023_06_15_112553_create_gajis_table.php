@@ -27,7 +27,7 @@ class CreateGajisTable extends Migration
             $table->enum('status_pengajuan', ['Sudah','Belum']);
             $table->timestamps();
 
-            $table->foreign('nip')->references('nip')->on('karyawans')->onDelete('cascade');  
+            $table->foreign('nip')->references('nip')->on('pegawais')->onDelete('cascade');  
         });
     }
 

@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Master;
 
+use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Rules\MatchOldPassword;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use PDF;
 use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
@@ -127,5 +130,13 @@ class UserController extends Controller
         ]);
         User::find($request->id)->update(['password' => Hash::make($request->new_password)]);
         return redirect('profil')->with('success', 'Password Sukses Diperbarui');
+    }
+
+    public function cetak_all()
+    {
+        $all = User::get();
+
+        $pdf = PDF::loadview('master/user/cetak-all', ['all' => $all]);
+        return $pdf->download('Keseluruhan Data User ' . Sistem::konversiTanggal(Carbon::now()));
     }
 }

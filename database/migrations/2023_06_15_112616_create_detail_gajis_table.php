@@ -24,7 +24,7 @@ class CreateDetailGajisTable extends Migration
             $table->integer('sub_total_lembur');
             $table->integer('sub_total_kasbon');
             $table->integer('sub_total_kehadiran');
-            $table->integer('sub_jumlah_tunjangan');
+            $table->integer('sub_jumlah_tunjangan_skill');
             $table->integer('sub_jumlah_lembur');
             $table->integer('sub_jumlah_kasbon');
             $table->integer('sub_jumlah_kehadiran');

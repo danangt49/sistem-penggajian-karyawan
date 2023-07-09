@@ -5,12 +5,14 @@ namespace App\Http\Controllers\Master;
 use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 use App\Libraries\Applib;
-use App\Models\Karyawan;
+use App\Models\Pegawai;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use PDF;
 use Yajra\DataTables\Facades\DataTables;
 
-class KaryawanController extends Controller
+class PegawaiController extends Controller
 {
     public function __construct()
     {
@@ -19,12 +21,12 @@ class KaryawanController extends Controller
 
     public function index()
     {
-        return view('master.karyawan.home');
+        return view('master.pegawai.home');
     }
 
     public function json()
     {
-        $data = Karyawan::orderBy('created_at', 'DESC')->get();
+        $data = Pegawai::orderBy('created_at', 'DESC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('nama_jabatan', function ($row) {
@@ -42,7 +44,7 @@ class KaryawanController extends Controller
             ->addColumn('action', function ($row) {
                 $btn =
                     '
-          <a class="btn btn-sm" href="karyawan/' .
+          <a class="btn btn-sm" href="pegawai/' .
                     $row->nip .
                     '"><i class="fas fa-tools"></i></a>
           <button data-id="' .
@@ -58,7 +60,7 @@ class KaryawanController extends Controller
     public function create()
     {
         if (Gate::allows('isAdmin')) {
-            return view('master.karyawan.create');
+            return view('master.pegawai.create');
         } else {
             return view('error.404');
         }
@@ -78,8 +80,8 @@ class KaryawanController extends Controller
                 'alamat' => $request->alamat,
             ];
 
-            Karyawan::create($data);
-            return redirect('master/karyawan')->with('success', 'Data Sukses Ditambahkan');
+            Pegawai::create($data);
+            return redirect('master/pegawai')->with('success', 'Data Sukses Ditambahkan');
         } else {
             return view('error.404');
         }
@@ -88,8 +90,8 @@ class KaryawanController extends Controller
     public function edit($nip)
     {
         if (Gate::allows('isAdmin')) {
-            $data['karyawan'] = Karyawan::where('nip', $nip)->first();
-            return view('master.karyawan.edit')->with($data);
+            $data['pegawai'] = Pegawai::where('nip', $nip)->first();
+            return view('master.pegawai.edit')->with($data);
         } else {
             return view('error.404');
         }
@@ -109,8 +111,8 @@ class KaryawanController extends Controller
                 'alamat' => $request->alamat,
             ];
 
-            Karyawan::where('nip', $request->nip)->update($data);
-            return redirect('master/karyawan')->with('success', 'Data Sukses Diperbarui');
+            Pegawai::where('nip', $request->nip)->update($data);
+            return redirect('master/pegawai')->with('success', 'Data Sukses Diperbarui');
         } else {
             return view('error.404');
         }
@@ -119,11 +121,19 @@ class KaryawanController extends Controller
     public function delete($nip)
     {
         if (Gate::allows('isAdmin')) {
-            $data = Karyawan::where('nip', $nip)->first();
+            $data = Pegawai::where('nip', $nip)->first();
             $data->delete();
-            return redirect('master/karyawan');
+            return redirect('master/pegawai');
         } else {
             return view('error.404');
         }
+    }
+
+    public function cetak_all()
+    {
+        $all = Pegawai::get();
+
+        $pdf = PDF::loadview('master/pegawai/cetak-all', ['all' => $all]);
+        return $pdf->download('Keseluruhan Data Pegawai ' . Sistem::konversiTanggal(Carbon::now()));
     }
 }

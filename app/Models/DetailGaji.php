@@ -19,7 +19,7 @@ class DetailGaji extends Model
         'sub_total_lembur',
         'sub_total_kasbon',
         'sub_total_kehadiran',
-        'sub_jumlah_tunjangan',
+        'sub_jumlah_tunjangan_skill',
         'sub_jumlah_lembur',
         'sub_jumlah_kasbon',
         'sub_jumlah_kehadiran',

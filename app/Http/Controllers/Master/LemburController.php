@@ -6,8 +6,10 @@ use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 
 use App\Models\Lembur;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use PDF;
 use Yajra\DataTables\Facades\DataTables;
 
 class LemburController extends Controller
@@ -119,5 +121,13 @@ class LemburController extends Controller
         } else {
              return view('error.404');
         }
+    }
+
+    public function cetak_all()
+    {
+        $all = Lembur::get();
+
+        $pdf = PDF::loadview('master/lembur/cetak-all', ['all' => $all]);
+        return $pdf->download('Keseluruhan Data Lembur ' . Sistem::konversiTanggal(Carbon::now()));
     }
 }

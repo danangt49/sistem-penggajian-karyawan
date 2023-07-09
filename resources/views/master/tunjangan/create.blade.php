@@ -53,7 +53,7 @@
                                             </div>
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                                                <a href="{{ url('master/tunjangan_skill') }}" class="btn btn-secondary">Batal</a>
+                                                <a href="{{ url('master/tunjangan-skill') }}" class="btn btn-secondary">Batal</a>
                                             </div>
                                         </div>
                                     </form>

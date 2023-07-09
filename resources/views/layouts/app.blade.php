@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistem Penggajian Karyawan</title>
+    <title>Sistem Penggajian Pegawai</title>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <link rel="stylesheet" href="{{ asset('public/admin/asset/plugins/fontawesome-free/css/all.min.css') }}">
@@ -99,10 +99,10 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{ url('master/karyawan') }}"
-                                        class="nav-link {{ request()->is('master/karyawan') ? 'active' : '' }}">
+                                    <a href="{{ url('master/pegawai') }}"
+                                        class="nav-link {{ request()->is('master/pegawai') ? 'active' : '' }}">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>Karyawan</p>
+                                        <p>Pegawai</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">

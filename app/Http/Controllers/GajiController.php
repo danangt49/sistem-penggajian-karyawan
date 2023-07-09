@@ -7,7 +7,7 @@ use App\Libraries\Applib;
 use App\Models\Kehadiran;
 use App\Models\DetailGaji;
 use App\Models\Gaji;
-use App\Models\Karyawan;
+use App\Models\Pegawai;
 use App\Models\Kasbon;
 use App\Models\Lembur;
 use App\Models\TunjanganSkill;
@@ -104,11 +104,10 @@ class GajiController extends Controller
             $slip_gaji = random_int(1000, 9999);
             $kd_kehadiran = random_int(1, 9999);
 
-            $gaji = Karyawan::where('nip', $request->nip)->first();
+            $gaji = Pegawai::where('nip', $request->nip)->first();
             $tunjangan = TunjanganSkill::where('kd_tunjangan_skill', $request->kd_tunjangan_skill)->first();
             $lembur = Lembur::where('kd_lembur', $request->kd_lembur)->first();
             $kasbon = Kasbon::where('kd_kasbon', $request->kd_kasbon)->first();
-            $gaji = Karyawan::where('nip', $request->nip)->first();
 
             $total = ($request->jumlah_kehadiran / $request->jumlah_hari_kerja_kalender) * $gaji->gaji_pokok;
             $gaji_bersih = $total + $tunjangan->jumlah_tunjangan_skill + $lembur->total_pendapatan_lembur - $kasbon->jumlah_kasbon;
@@ -134,6 +133,18 @@ class GajiController extends Controller
                 'total_gaji' => $total,
             ];
 
+            if($request->kd_kasbon == 1) {
+                $sub_jumlah_kasbon = 0;
+            } else {
+                $sub_jumlah_kasbon = 1;
+            }
+
+            if($request->kd_tunjangan_skill == 1) {
+                $sub_jumlah_tunjangan_skill = 0;
+            } else {
+                $sub_jumlah_tunjangan_skill = 1;
+            }
+
             $data3 = [
                 'no_slip_gaji' => $slip_gaji,
                 'kd_tunjangan_skill' => $request->kd_tunjangan_skill,
@@ -144,9 +155,9 @@ class GajiController extends Controller
                 'sub_total_lembur' => $lembur->total_pendapatan_lembur,
                 'sub_total_kasbon' => $kasbon->jumlah_kasbon,
                 'sub_total_kehadiran' => $total,
-                'sub_jumlah_tunjangan' => 1,
+                'sub_jumlah_tunjangan_skill' => $sub_jumlah_kasbon,
                 'sub_jumlah_lembur' => $lembur->jumlah_jam_lembur,
-                'sub_jumlah_kasbon' => 1,
+                'sub_jumlah_kasbon' => $sub_jumlah_tunjangan_skill,
                 'sub_jumlah_kehadiran' => $request->jumlah_kehadiran,
             ];
 
@@ -173,11 +184,10 @@ class GajiController extends Controller
     {
         if (Gate::allows('isAdmin')) {
 
-            $gaji = Karyawan::where('nip', $request->nip)->first();
+            $gaji = Pegawai::where('nip', $request->nip)->first();
             $tunjangan = TunjanganSkill::where('kd_tunjangan_skill', $request->kd_tunjangan_skill)->first();
             $lembur = Lembur::where('kd_lembur', $request->kd_lembur)->first();
             $kasbon = Kasbon::where('kd_kasbon', $request->kd_kasbon)->first();
-            $gaji = Karyawan::where('nip', $request->nip)->first();
 
             $total = ($request->jumlah_kehadiran / $request->jumlah_hari_kerja_kalender) * $gaji->gaji_pokok;
             $gaji_bersih = $total + $tunjangan->jumlah_tunjangan_skill + $lembur->total_pendapatan_lembur - $kasbon->jumlah_kasbon;
@@ -202,6 +212,18 @@ class GajiController extends Controller
                 'total_gaji' => $total,
             ];
 
+            if($request->kd_kasbon == 1) {
+                $sub_jumlah_kasbon = 0;
+            } else {
+                $sub_jumlah_kasbon = 1;
+            }
+
+            if($request->kd_tunjangan_skill == 1) {
+                $sub_jumlah_tunjangan_skill = 0;
+            } else {
+                $sub_jumlah_tunjangan_skill = 1;
+            }
+
             $data3 = [
                 'no_slip_gaji' => $request->no_slip_gaji,
                 'kd_tunjangan_skill' => $request->kd_tunjangan_skill,
@@ -212,9 +234,9 @@ class GajiController extends Controller
                 'sub_total_lembur' => $lembur->total_pendapatan_lembur,
                 'sub_total_kasbon' => $kasbon->jumlah_kasbon,
                 'sub_total_kehadiran' => $total,
-                'sub_jumlah_tunjangan' => 1,
+                'sub_jumlah_tunjangan_skill' => $sub_jumlah_tunjangan_skill,
                 'sub_jumlah_lembur' => $lembur->jumlah_jam_lembur,
-                'sub_jumlah_kasbon' => 1,
+                'sub_jumlah_kasbon' => $sub_jumlah_kasbon,
                 'sub_jumlah_kehadiran' => $request->jumlah_kehadiran,
             ];
 
@@ -254,7 +276,7 @@ class GajiController extends Controller
             $detail = Gaji::where('no_slip_gaji', $no_slip_gaji)->first();
 
             $pdf = PDF::loadview('gaji/cetak', ['detail' => $detail]);
-            return $pdf->download('Slip Gaji ' . $detail->karyawan->nm_pegawai . ' ' . $no_slip_gaji);
+            return $pdf->download('Slip Gaji ' . $detail->pegawai->nm_pegawai . ' ' . $no_slip_gaji);
         } else {
              return view('error.404');
         }

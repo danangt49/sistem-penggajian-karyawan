@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="page-header">
-                        <i class="fas fa-globe"></i>Riwayat Penggajian Pegawai <br> PT Gasaba Sukses Mandiri
+                        <i class="fas fa-globe"></i>Keseluruhan Data Lembur <br> PT Gasaba Sukses Mandiri
                     </h4>
                 </div>
             </div>
@@ -53,37 +53,21 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr align="center">
-                                <th>NIP</th>
-                                <th>Nama</th>
-                                <th>Gaji Pokok (Rp.)</th>
-                                <th>Jumlah Kehadiran/Dari (Hari)</th>
-                                <th>Gaji Berdasarkan Kehadiran (Rp.)</th>
-                                <th>Tunjangan Skill</th>
-                                <th>Jumlah Lembur Jam/Rp.</th>
-                                <th>Kasbon</th>
-                                <th>Total Tunjangan Skill (Rp.)</th>
-                                <th>Total Lembur (Rp.)</th>
-                                <th>Total Kasbon (Rp.)</th>
-                                <th>Gaji Bersih (Rp.)</th>
+                                <th>No</th>
+                                <th>Nama Lembur</th>
+                                <th>Jumlah Jam Lembur</th>
+                                <th>Biaya Lembur Perjam (Rp.)</th>
+                                <th>Total Pendapatan Lembur (Rp.)</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($all as $item)
                                 <tr align="center">
-                                    <td>{{ $item->nip }}</td>
-                                    <td>{{ $item->pegawai->nm_pegawai }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->total_gaji_pokok) }}</td>
-                                    <td>{{ $item->detailGaji->kehadiran->jumlah_kehadiran }} /
-                                        {{ $item->detailGaji->kehadiran->jumlah_hari_kerja_kalender }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->detailGaji->kehadiran->total_gaji) }}</td>
-                                    <td>{{ $item->detailGaji->tunjangan->nm_tunjangan_skill }}</td>
-                                    <td>{{ $item->detailGaji->lembur->jumlah_jam_lembur }}/{{ Sistem::formatRupiah($item->detailGaji->lembur->biaya_lembur_perjam) }}
-                                    </td>
-                                    <td>{{ $item->detailGaji->kasbon->nm_kasbon }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->detailGaji->sub_total_tunjangan_skill) }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->detailGaji->sub_total_lembur) }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->detailGaji->sub_total_kasbon) }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->gaji_bersih) }}</td>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->nm_lembur }}</td>
+                                    <td>{{ $item->jumlah_jam_lembur }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->biaya_lembur_perjam) }}</td>
+                                    <td>{{  Sistem::formatRupiah($item->total_pendapatan_lembur) }}</td>
                                 </tr>
                             @endforeach
 

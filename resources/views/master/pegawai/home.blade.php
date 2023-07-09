@@ -5,13 +5,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Karyawan</h1>
+                        <h1 class="m-0">Pegawai</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                             <li class="breadcrumb-item">Master</li>
-                            <li class="breadcrumb-item active">Karyawan</li>
+                            <li class="breadcrumb-item active">Pegawai</li>
                         </ol>
                     </div>
                 </div>
@@ -32,11 +32,15 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title">Data Karyawan</h3>
-                                       @if (Auth::user()->level == 'admin')
-                                            <a href="{{ url('master/karyawan/form') }}"
+                                        <h3 class="card-title">Data Pegawai</h3>
+                                        @if (Auth::user()->level == 'admin')
+                                            <a href="{{ url('master/pegawai/form') }}"
                                                 class="btn btn-primary float-right"><i class="fas fa-plus"></i> Tambah</a>
                                         @endif
+
+                                        <a href="{{ url('master/pegawai-cetak-all-pdf') }}"
+                                            class="btn btn-success float-right" style="margin-right: 10px;"><i
+                                                class="fas fa-print"></i> Cetak</a>
                                     </div>
                                     <div class="card-body">
                                         <table id="datatable" class="table table-bordered table-striped text-center">
@@ -77,7 +81,7 @@
             $('#datatable').dataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ url('master/json-karyawan') }}",
+                ajax: "{{ url('master/json-pegawai') }}",
                 columns: [{
                         title: 'No',
                         data: null,
@@ -117,7 +121,7 @@
                         title: 'Alamat',
                         data: 'alamat'
                     },
-                   @if (Auth::user()->level == 'admin')
+                    @if (Auth::user()->level == 'admin')
                         {
                             title: 'Action',
                             data: 'action',
@@ -142,7 +146,7 @@
                 .then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('master/karyawan-delete') }}" + '/' + document_id,
+                            url: "{{ url('master/pegawai-delete') }}" + '/' + document_id,
                             type: "POST",
                             data: {
                                 '_method': 'GET',

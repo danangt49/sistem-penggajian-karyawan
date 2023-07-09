@@ -22,8 +22,8 @@ class Gaji extends Model
     ];
     protected $table = 'gajis';
     
-    public function karyawan(){
-        return $this->belongsTo('App\Models\Karyawan', 'nip', 'nip');
+    public function pegawai(){
+        return $this->belongsTo('App\Models\Pegawai', 'nip', 'nip');
     }
 
     public function detailGaji(){

@@ -13,7 +13,7 @@ class Jabatan extends Model
     ];
     protected $table = 'jabatans';
 
-    public function jabatan(){
-        return $this->hasOne('App\Models\Karyawan', 'kd_jabatan', 'kd_jabatan');
+    public function pegawai(){
+        return $this->hasOne('App\Models\Pegawai', 'kd_jabatan', 'kd_jabatan');
     }
 }

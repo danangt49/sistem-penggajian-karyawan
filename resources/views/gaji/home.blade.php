@@ -34,7 +34,6 @@
                                             <a href="{{ url('gaji/form') }}" class="btn btn-primary float-right"><i
                                                     class="fas fa-plus"></i> Tambah</a>
                                         @endif
-
                                         <a href="{{ url('gaji-cetak-all-pdf') }}" class="btn btn-success float-right"
                                             style="margin-right: 10px;"><i class="fas fa-print"></i> Cetak</a>
                                     </div>

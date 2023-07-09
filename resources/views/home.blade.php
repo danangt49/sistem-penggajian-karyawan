@@ -24,13 +24,13 @@
                             <div class="col-lg-3 col-6">
                                 <div class="small-box bg-info">
                                     <div class="inner">
-                                        <h3>{{ $total_karyawan }}</h3>
-                                        <p>Karyawan</p>
+                                        <h3>{{ $total_pegawai }}</h3>
+                                        <p>Pegawai</p>
                                     </div>
                                     <div class="icon">
                                         <i class="fa fa-users"></i>
                                     </div>
-                                    <a href="{{ url('master/karyawan') }}" class="small-box-footer">Selengkapnya... <i
+                                    <a href="{{ url('master/pegawai') }}" class="small-box-footer">Selengkapnya... <i
                                             class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
@@ -75,7 +75,32 @@
                             </div>
                             <div class="col-12">
                                 <div class="card">
-                                    <div class="card-header">Diagram Batang Jurnal Akutansi</div>
+                                    <div class="card-header">
+                                        <p>Diagram Batang Jurnal Akutansi</p> 
+                                        <hr>
+                                        <form id="filter-form" action="{{ route('home') }}" method="GET">
+                                            <div class="form-row">
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="start_date">Dari</label>
+                                                    <input type="date" class="form-control" id="start_date"
+                                                        name="start_date" value="{{ $start_date }}">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="end_date">Sampai</label>
+                                                    <input type="date" class="form-control" id="end_date"
+                                                        name="end_date" value="{{ $end_date }}">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <button type="submit"
+                                                        class="btn btn-primary float-right"><i
+                                                        class="fas fa-filter"></i>Filter</button>
+                                                    <a href="{{ route('download', ['start_date' => $start_date, 'end_date' => $end_date]) }}"
+                                                        class="btn btn-success float-right" style="margin-right: 10px;"><i
+                                                            class="fas fa-print"></i> Cetak</a>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                     <div class="card-body">
                                         <canvas id="barChart" style="width: 100%; height: 400px;"></canvas>
                                     </div>
@@ -93,57 +118,57 @@
 @endsection
 
 @section('js')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var kredit = {!! json_encode($kredit) !!};
-    var debit = {!! json_encode($debit) !!};
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var kredit = {!! json_encode($kredit) !!};
+        var debit = {!! json_encode($debit) !!};
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('barChart').getContext('2d');
-        var barChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: {!! json_encode($tanggal) !!},
-                datasets: [{
-                    label: 'Kredit',
-                    data: kredit,
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }, {
-                    label: 'Debit',
-                    data: debit,
-                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    x: {
-                        display: true,
-                        title: {
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('barChart').getContext('2d');
+            var barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($tanggal) !!},
+                    datasets: [{
+                        label: 'Kredit',
+                        data: kredit,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Debit',
+                        data: debit,
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
                             display: true,
-                            text: 'Tanggal Gaji'
+                            title: {
+                                display: true,
+                                text: 'Tanggal Gaji'
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            display: true,
+                            title: {
+                                display: true,
+                                text: 'Jumlah (Rp.)'
+                            }
                         }
                     },
-                    y: {
-                        beginAtZero: true,
-                        display: true,
+                    plugins: {
                         title: {
                             display: true,
-                            text: 'Jumlah (Rp.)'
+                            text: 'Data Kredit & Debit per Tanggal Gaji'
                         }
                     }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Data Kredit & Debit per Tanggal Gaji'
-                    }
                 }
-            }
+            });
         });
-    });
-</script>
+    </script>
 @endsection

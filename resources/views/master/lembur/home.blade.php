@@ -32,10 +32,14 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">Data Lembur</h3>
-                                       @if (Auth::user()->level == 'admin')
+                                        @if (Auth::user()->level == 'admin')
                                             <a href="{{ url('master/lembur/form') }}" class="btn btn-primary float-right"><i
                                                     class="fas fa-plus"></i> Tambah</a>
                                         @endif
+
+                                        <a href="{{ url('master/lembur-cetak-all-pdf') }}"
+                                            class="btn btn-success float-right" style="margin-right: 10px;"><i
+                                                class="fas fa-print"></i> Cetak</a>
                                     </div>
                                     <div class="card-body">
                                         <table id="datatable" class="table table-bordered table-striped text-center">
@@ -100,7 +104,7 @@
                         title: 'Total',
                         data: 'total_pendapatan_lembur'
                     },
-                   @if (Auth::user()->level == 'admin')
+                    @if (Auth::user()->level == 'admin')
                         {
                             title: 'Action',
                             data: 'action',

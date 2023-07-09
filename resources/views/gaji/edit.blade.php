@@ -5,7 +5,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Lembur</h1>
+                        <h1 class="m-0">Gaji</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -31,12 +31,12 @@
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
-                                                        <label for="nip">Nama Karyawan</label>
+                                                        <label for="nip">Nama Pegawai</label>
                                                         <input type='hidden' class="form-control"  name="no_slip_gaji" value="{{ $gaji->no_slip_gaji }}"/>
                                                         <input type="hidden" class="form-control"  name="id_detail_gaji" value="{{ $gaji->detailGaji->id_detail_gaji }}">
                                                         <input type="hidden" class="form-control"  name="kd_kehadiran" value="{{ $gaji->detailGaji->kd_kehadiran }}">
                                                         <select class="custom-select rounded-0" id="nip" name="nip">
-                                                            @foreach ( Applib::dd_karyawan() as $key => $value)
+                                                            @foreach ( Applib::dd_pegawai() as $key => $value)
                                                                 <option value="{{ $key }}" {{ ( $key == $gaji->nip) ? 'selected' : '' }}>{{ $value }}</option>
                                                             @endforeach   
                                                         </select>
@@ -91,7 +91,7 @@
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
-                                                        <label for="jumlah_hari_kerja_kalender">Jumlah Hari Kalender</label>
+                                                        <label for="jumlah_hari_kerja_kalender">Jumlah Hari Kerja Kalender</label>
                                                         <input type="number" class="form-control" id="jumlah_hari_kerja_kalender" name="jumlah_hari_kerja_kalender" value="{{ $gaji->detailGaji->Kehadiran->jumlah_hari_kerja_kalender }}">
                                                     </div>
                                                 </div>
@@ -113,7 +113,7 @@
                                             </div>
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-primary">Simpan</button>
-                                                <a href="{{ url('gaji') }}" class="btn btn-secondary">Batal</a>
+                                                <a href="{{ url('master/gaji') }}" class="btn btn-secondary">Batal</a>
                                             </div>
                                         </div>
                                     </form>
@@ -175,7 +175,7 @@
             },
             messages: {
                 nip: {
-                    required: "Nama Karyawan Harus Di isi!",
+                    required: "Nama Pegawai Harus Di isi!",
                 },
                 kd_tunjangan_skill: {
                     required: "Tunjangan Skill Harus Di isi!",
@@ -187,7 +187,7 @@
                     required: "Lembur Harus Di isi!",
                 },
                 nip: {
-                    required: "Nama Karyawan Harus Di isi!",
+                    required: "Nama Pegawai Harus Di isi!",
                 },
                 jumlah_kehadiran: {
                     required: "Jumlah Kehadiran Harus Di isi!",

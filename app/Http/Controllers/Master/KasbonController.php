@@ -6,8 +6,10 @@ use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
 
 use App\Models\Kasbon;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use PDF;
 use Yajra\DataTables\Facades\DataTables;
 
 class KasbonController extends Controller
@@ -114,5 +116,13 @@ class KasbonController extends Controller
         } else {
             return view('error.404');
         }
+    }
+
+    public function cetak_all()
+    {
+        $all = Kasbon::get();
+
+        $pdf = PDF::loadview('master/kasbon/cetak-all', ['all' => $all]);
+        return $pdf->download('Keseluruhan Data Kasbon ' . Sistem::konversiTanggal(Carbon::now()));
     }
 }

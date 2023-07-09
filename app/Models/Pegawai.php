@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Karyawan extends Model
+class Pegawai extends Model
 {
     protected $primaryKey = 'nip';
     protected $fillable = [
@@ -17,13 +17,13 @@ class Karyawan extends Model
         'no_telepon',
         'alamat',
     ];
-    protected $table = 'karyawans';
+    protected $table = 'pegawais';
     
     public function jabatan(){
         return $this->belongsTo('App\Models\Jabatan', 'kd_jabatan', 'kd_jabatan');
     }
 
-    public function gajiKaryawan(){
+    public function gajiPegawai(){
         return $this->hasMany('App\Models\Gaji', 'nip', 'nip');
     }
 }
