@@ -23,8 +23,6 @@ class CreateUsersTable extends Migration
             $table->enum('status', ['AKTIF', 'TIDAK']);
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('nip')->references('nip')->on('pegawais')->onDelete('cascade');  
         });
     }
 
