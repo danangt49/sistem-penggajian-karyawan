@@ -37,12 +37,12 @@ class UserController extends Controller
             ->addColumn('action', function ($row) {
                 $btn =
                     '
-          <a class="btn btn-sm" href="user/' .
+          <a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="user/' .
                     $row->id .
                     '"><i class="fas fa-tools"></i></a>
           <button data-id="' .
                     $row->id .
-                    '"class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
+                    '" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
           ';
                 return $btn;
             })
@@ -52,7 +52,7 @@ class UserController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             return view('master.user.create');
         } else {
             return view('error.404');
@@ -61,7 +61,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = User::where('email', $request->email)->exists();
 
             if ($exiting) {
@@ -76,7 +76,7 @@ class UserController extends Controller
             ];
 
             $data2 = [
-                'status' => 'Aktif Terdaftar',
+                'status' => 'Aktif',
             ];
 
             User::create($data);
@@ -89,7 +89,7 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data['user'] = User::find($id);
             return view('master.user.edit')->with($data);
         } else {
@@ -99,7 +99,7 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = User::where('id', '!=', $request->id)
                 ->where('email', $request->email)
                 ->exists();
@@ -130,7 +130,7 @@ class UserController extends Controller
 
     public function delete($id)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data = User::find($id);
             $data2 = [
                 'status' => 'Aktif',

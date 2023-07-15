@@ -41,12 +41,12 @@ class KasbonController extends Controller
                 $btn1 = '';
                 $btn2 =
                     '
-            <a class="btn btn-sm" href="kasbon/' .
+            <a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="kasbon/' .
                     $row->kd_kasbon .
                     '"><i class="fas fa-tools"></i></a>
             <button data-kd_kasbon="' .
                     $row->kd_kasbon .
-                    '"class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
+                    '" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
             ';
                 if ($row->kd_kasbon == 1) {
                     return $btn1;
@@ -60,7 +60,7 @@ class KasbonController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             return view('master.kasbon.create');
         } else {
             return view('error.404');
@@ -69,7 +69,7 @@ class KasbonController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = Kasbon::where('jumlah_kasbon', $request->jumlah_kasbon)->exists();
 
             if ($exiting) {
@@ -91,7 +91,7 @@ class KasbonController extends Controller
 
     public function edit($kd_kasbon)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data['kasbon'] = Kasbon::where('kd_kasbon', $kd_kasbon)->first();
             return view('master.kasbon.edit')->with($data);
         } else {
@@ -101,7 +101,7 @@ class KasbonController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = Kasbon::where('kd_kasbon', '!=', $request->kd_kasbon)
                 ->where('jumlah_kasbon', $request->jumlah_kasbon)
                 ->exists();
@@ -126,7 +126,7 @@ class KasbonController extends Controller
 
     public function delete($kd_kasbon)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data = Kasbon::find($kd_kasbon);
             $data->delete();
             return redirect('master/kasbon');

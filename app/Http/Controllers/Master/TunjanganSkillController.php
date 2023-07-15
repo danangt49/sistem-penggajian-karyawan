@@ -40,12 +40,12 @@ class TunjanganSkillController extends Controller
                 $btn1 = '';
                 $btn2 =
                     '
-            <a class="btn btn-sm" href="tunjangan-skill/' .
+            <a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="tunjangan-skill/' .
                     $row->kd_tunjangan_skill .
                     '"><i class="fas fa-tools"></i></a>
             <button data-kd_tunjangan_skill="' .
                     $row->kd_tunjangan_skill .
-                    '"class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
+                    '" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
             ';
                 if ($row->kd_tunjangan_skill == 1) {
                     return $btn1;
@@ -59,7 +59,7 @@ class TunjanganSkillController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             return view('master.tunjangan.create');
         } else {
             return view('error.404');
@@ -68,7 +68,7 @@ class TunjanganSkillController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = TunjanganSkill::where('nm_tunjangan_skill', $request->nm_tunjangan_skill)
                 ->where('jumlah_tunjangan_skill', $request->jumlah_tunjangan_skill)
                 ->exists();
@@ -93,7 +93,7 @@ class TunjanganSkillController extends Controller
 
     public function edit($kd_tunjangan_skill)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data['tunjangan'] = TunjanganSkill::where('kd_tunjangan_skill', $kd_tunjangan_skill)->first();
             return view('master.tunjangan.edit')->with($data);
         } else {
@@ -103,7 +103,7 @@ class TunjanganSkillController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = TunjanganSkill::where('kd_tunjangan_skill', '!=', $request->kd_tunjangan_skill)
                 ->where('nm_tunjangan_skill', $request->nm_tunjangan_skill)
                 ->where('jumlah_tunjangan_skill', $request->jumlah_tunjangan_skill)
@@ -129,7 +129,7 @@ class TunjanganSkillController extends Controller
 
     public function delete($kd_tunjangan_skill)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data = TunjanganSkill::where('kd_tunjangan_skill', $kd_tunjangan_skill)->first();
             $data->delete();
             return redirect('master/tunjangan-skill');

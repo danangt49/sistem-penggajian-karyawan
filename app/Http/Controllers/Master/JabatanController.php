@@ -38,12 +38,12 @@ class JabatanController extends Controller
             ->addColumn('action', function ($row) {
                 $btn =
                     '
-          <a class="btn btn-sm" href="jabatan/' .
+          <a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="jabatan/' .
                     $row->kd_jabatan .
                     '"><i class="fas fa-tools"></i></a>
           <button data-kd_jabatan="' .
                     $row->kd_jabatan .
-                    '"class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
+                    '" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
           ';
                 return $btn;
             })
@@ -53,7 +53,7 @@ class JabatanController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             return view('master.jabatan.create');
         } else {
             return view('error.404');
@@ -62,7 +62,7 @@ class JabatanController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = Jabatan::where('nm_jabatan', $request->nm_jabatan)
                 ->where('total_gaji', $request->total_gaji)
                 ->exists();
@@ -85,7 +85,7 @@ class JabatanController extends Controller
 
     public function edit(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data['jabatan'] = Jabatan::where('kd_jabatan', $request->kd_jabatan)->first();
             return view('master.jabatan.edit')->with($data);
         } else {
@@ -95,7 +95,7 @@ class JabatanController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = Jabatan::where('kd_jabatan', '!=', $request->kd_jabatan)
                 ->where('nm_jabatan', $request->nm_jabatan)
                 ->where('total_gaji', $request->total_gaji)
@@ -119,7 +119,7 @@ class JabatanController extends Controller
 
     public function delete(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data = Jabatan::where('kd_jabatan', $request->kd_jabatan)->first();
             $data->delete();
             return redirect('master/jabatan');

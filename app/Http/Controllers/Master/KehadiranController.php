@@ -35,12 +35,12 @@ class KehadiranController extends Controller
             ->addColumn('action', function ($row) {
                 $btn =
                     '
-            <a class="btn btn-sm" href="kehadiran/' .
+            <a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="kehadiran/' .
                     $row->kd_kehadiran .
                     '"><i class="fas fa-tools"></i></a>
             <button data-kd_kehadiran="' .
                     $row->kd_kehadiran .
-                    '"class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
+                    '" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
             ';
                 return $btn;
             })
@@ -50,7 +50,7 @@ class KehadiranController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             return view('master.kehadiran.create');
         } else {
             return view('error.404');
@@ -59,7 +59,7 @@ class KehadiranController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = Kehadiran::where('jumlah_kehadiran', $request->jumlah_kehadiran)
                 ->where('jumlah_hari_kerja_kalender', $request->jumlah_hari_kerja_kalender)
                 ->exists();
@@ -83,7 +83,7 @@ class KehadiranController extends Controller
 
     public function edit($kd_kehadiran)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data['kehadiran'] = Kehadiran::where('kd_kehadiran', $kd_kehadiran)->first();
             return view('master.kehadiran.edit')->with($data);
         } else {
@@ -93,7 +93,7 @@ class KehadiranController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = Kehadiran::where('kd_kehadiran', '!=', $request->kd_kehadiran)
                 ->where('jumlah_kehadiran', $request->jumlah_kehadiran)
                 ->where('jumlah_hari_kerja_kalender', $request->jumlah_hari_kerja_kalender)
@@ -117,7 +117,7 @@ class KehadiranController extends Controller
 
     public function delete($kd_kehadiran)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data = Kehadiran::find($kd_kehadiran);
             $data->delete();
             return redirect('master/kehadiran');

@@ -59,7 +59,7 @@ class GajiController extends Controller
                 return Sistem::formatRupiah($row->gaji_bersih);
             })
             ->addColumn('action', function ($row) {
-                $btn = ' <a class="btn btn-sm" href="/data/gaji-detail/' . $row->no_slip_gaji . '"><i class="fas fa-eye"></i></a>';
+                $btn = ' <a class="btn btn-sm" data-toggle="tooltip" title="Detail Data" href="/data/gaji-detail/' . $row->no_slip_gaji . '"><i class="fas fa-eye"></i></a>';
                 return $btn;
             })
 

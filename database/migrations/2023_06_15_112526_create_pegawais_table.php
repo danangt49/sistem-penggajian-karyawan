@@ -22,7 +22,7 @@ class CreatePegawaisTable extends Migration
             $table->date('tanggal_lahir');
             $table->string('no_telepon');
             $table->string('alamat');
-            $table->enum('status', ['Aktif Terdaftar', 'Aktif', 'Tidak'])->default('Aktif');
+            $table->enum('status', ['Aktif', 'Belum Aktif', 'Tidak Aktif'])->default('Belum Aktif');
             $table->timestamps();
         
             $table->foreign('kd_jabatan')->references('kd_jabatan')->on('jabatans')->onDelete('cascade');

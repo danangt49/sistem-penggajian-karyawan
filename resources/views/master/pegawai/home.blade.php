@@ -130,10 +130,12 @@
                         title: 'Status',
                         data: 'status',
                         render: function(data) {
-                            if (data == "Aktif Terdaftar") {
+                            if (data == "Aktif") {
                                 return '<span class="badge badge-success">Aktif</span>';
+                            } else if (data == "Belum Aktif") {
+                                return '<span class="badge badge-secondary">Belum Aktif</span>';
                             } else {
-                                return '<span class="badge badge-danger">Tidak</span>';
+                                return '<span class="badge badge-danger">Tidak Aktif</span>';
                             }
                         }
                     },
@@ -194,6 +196,50 @@
                         )
                     }
                 })
+        });
+
+        $('body').on('click', '.update', function() {
+            var csrf_token = "{{ csrf_token() }}";
+            var id = $(this).data("id");
+
+            swal({
+                title: "Apakah Anda Yakin?",
+                text: "Anda Akan Mengubah Status Pegawai Ini?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya, Ubah Status"
+            }).then((result) => {
+                if (result.value) {
+                    $.ajax({
+                        url: "{{ url('master/pegawai-update-status') }}"+ '/' + id,
+                        type: "POST",
+                        data: {
+                            '_method': 'GET',
+                            '_token': csrf_token
+                        },
+                        success: function() {
+                            swal({
+                                title: 'Sukses',
+                                html: 'Ubah Status Data <b style="color:green;">Sukses</b> Klik OK!',
+                                type: 'success',
+                                timer: 1500
+                            }).then(function() {
+                                $('#datatable').DataTable().ajax.reload();
+                            });
+                        },
+                        error: function() {
+                            swal({
+                                title: 'Error',
+                                text: 'Terjadi kesalahan saat mengubah status',
+                                type: 'error',
+                                timer: 1500
+                            });
+                        }
+                    });
+                } else if (result.dismiss === 'cancel') {
+                    swal('Dibatalkan', 'Tetap di Halaman Ini', 'error');
+                }
+            });
         });
     </script>
 @stop

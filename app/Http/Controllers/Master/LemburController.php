@@ -41,15 +41,8 @@ class LemburController extends Controller
             })
             ->addColumn('action', function ($row) {
                 $btn1 = '';
-                $btn2 =
-                    '
-            <a class="btn btn-sm" href="lembur/' .
-                    $row->kd_lembur .
-                    '"><i class="fas fa-tools"></i></a>
-            <button data-kd_lembur="' .
-                    $row->kd_lembur .
-                    '"class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>
-            ';
+                $btn2 = '<a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="lembur/' .$row->kd_lembur .'"><i class="fas fa-tools"></i></a>
+                <button data-kd_lembur="' .$row->kd_lembur .'" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>';
 
                 if ($row->kd_lembur == 1) {
                     return $btn1;
@@ -63,7 +56,7 @@ class LemburController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             return view('master.lembur.create');
         } else {
             return view('error.404');
@@ -72,7 +65,7 @@ class LemburController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = Lembur::where('jumlah_jam_lembur', $request->jumlah_jam_lembur)
                 ->where('biaya_lembur_perjam', $request->biaya_lembur_perjam)
                 ->where('total_pendapatan_lembur', $request->total_pendapatan_lembur)
@@ -99,7 +92,7 @@ class LemburController extends Controller
 
     public function edit($kd_lembur)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data['lembur'] = Lembur::where('kd_lembur', $kd_lembur)->first();
             return view('master.lembur.edit')->with($data);
         } else {
@@ -109,7 +102,7 @@ class LemburController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $exiting = Lembur::where('kd_lembur', '!=', $request->kd_lembur)
                 ->where('jumlah_jam_lembur', $request->jumlah_jam_lembur)
                 ->where('biaya_lembur_perjam', $request->biaya_lembur_perjam)
@@ -137,7 +130,7 @@ class LemburController extends Controller
 
     public function delete($kd_lembur)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data = Lembur::where('kd_lembur', $kd_lembur)->first();
             $data->delete();
             return redirect('master/lembur');

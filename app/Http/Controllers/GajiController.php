@@ -61,9 +61,9 @@ class GajiController extends Controller
                 return Sistem::formatRupiah($row->gaji_bersih);
             })
             ->addColumn('action', function ($row) {
-                $btn1 = '<a class="btn btn-sm" href="gaji/' . $row->no_slip_gaji . '"><i class="fas fa-tools"></i></a>';
-                $btn2 = ' <a class="btn btn-sm" href="gaji-detail/' . $row->no_slip_gaji . '"><i class="fas fa-eye"></i></a>';
-                $btn3 = '<button data-no_slip_gaji="' . $row->no_slip_gaji . '"class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>';
+                $btn1 = '<a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="gaji/' . $row->no_slip_gaji . '"><i class="fas fa-tools"></i></a>';
+                $btn2 = ' <a class="btn btn-sm" data-toggle="tooltip" title="Detail Data" href="gaji-detail/' . $row->no_slip_gaji . '"><i class="fas fa-eye"></i></a>';
+                $btn3 = '<button data-no_slip_gaji="' . $row->no_slip_gaji . '" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>';
                 if ($row->status_pengajuan == 'Sudah') {
                     if (date('m-y', strtotime($row->tanggal_gaji)) < Carbon::now()->format('m-y')) {
                         return $btn2;
@@ -81,7 +81,7 @@ class GajiController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             return view('gaji.create');
         } else {
             return view('error.404');
@@ -90,7 +90,7 @@ class GajiController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $slip_gaji = random_int(1000, 9999);
 
             $existingGaji = Gaji::where('nip', $request->nip)
@@ -168,7 +168,7 @@ class GajiController extends Controller
 
     public function edit($no_slip_gaji)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data['gaji'] = Gaji::where('no_slip_gaji', $no_slip_gaji)->first();
             return view('gaji.edit')->with($data);
         } else {
@@ -178,7 +178,7 @@ class GajiController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $existingGaji = Gaji::where('no_slip_gaji', $request->no_slip_gaji)->first();
 
             $requestTanggalGaji = date('m-Y', strtotime($request->tanggal_gaji));
@@ -250,7 +250,7 @@ class GajiController extends Controller
 
     public function delete($no_slip_gaji)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin')) {
             $data = Gaji::where('no_slip_gaji', $no_slip_gaji)->first();
             $data->delete();
             return redirect('gaji');

@@ -45,7 +45,7 @@ Route::get('/gaji-detail/{no_slip_gaji}', [GajiController::class, 'detail'])->na
 Route::get('/gaji-cetak-pdf/{no_slip_gaji}', [GajiController::class, 'cetak_pdf'])->name('cetak_pdf');
 Route::get('/gaji-cetak-all-pdf', [GajiController::class, 'cetak_all'])->name('cetak_all');
 
-Route::prefix('data')->group(function () {
+Route::prefix('data')->middleware('level:pegawai')->group(function () {
     Route::get('/gaji', [App\Http\Controllers\Data\GajiController::class, 'index'])->name('gaji');
     Route::get('/json-gaji', [App\Http\Controllers\Data\GajiController::class, 'json'])->name('json-data');
     Route::get('/gaji-detail/{no_slip_gaji}', [App\Http\Controllers\Data\GajiController::class, 'detail'])->name('detail');
@@ -53,7 +53,7 @@ Route::prefix('data')->group(function () {
     Route::get('/gaji-cetak-all-pdf', [App\Http\Controllers\Data\GajiController::class, 'cetak_all'])->name('cetak_all');
 });
 
-Route::prefix('master')->group(function () {
+Route::prefix('master')->middleware('level:user','level:admin')->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user');
     Route::get('/json-user', [UserController::class, 'json'])->name('json-data');
     Route::get('/user/form', [UserController::class, 'create'])->name('create');
@@ -81,6 +81,7 @@ Route::prefix('master')->group(function () {
     Route::post('/pegawai-update/{nip}', [PegawaiController::class, 'update'])->name('update');
     Route::get('/pegawai-delete/{nip}', [PegawaiController::class, 'delete'])->name('delete');
     Route::get('/pegawai-cetak-all-pdf', [PegawaiController::class, 'cetak_all'])->name('pegawai-cetak-all-pdf');
+    Route::get('/pegawai-update-status/{nip}', [PegawaiController::class, 'updateStatus'])->name('pegawai-update-status');
     Route::get('/json-status', [PegawaiController::class, 'json_get_by_status'])->name('json-status');
     Route::get('/json-pegawai/{nama}', [PegawaiController::class, 'json_get_by_nama'])->name('json-nama');
 
