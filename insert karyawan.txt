@@ -1,6 +1,6 @@
-INSERT INTO `pegawais` (`nip`, `kd_jabatan`, `gaji_pokok`, `nm_pegawai`, `tanggal_masuk`, `tanggal_lahir`, `no_telepon`, `alamat`, `created_at`, `updated_at`)
+INSERT INTO `pegawais` (`nip`, `kd_jabatan`, `gaji_pokok`, `nm_pegawai`, `tanggal_masuk`, `tanggal_lahir`, `no_telepon`, `alamat`, `status`, `created_at`, `updated_at`)
 VALUES
-	(1,3,4500000,'Dian Latifah','2022-07-04','2000-09-15','089665511391','Pemalang, Jawa Tengah','2023-07-05 12:18:04','2023-07-05 12:18:04'),
-	(2,3,4500000,'Ahmad Rizaldi Riyan','2021-07-05','1999-09-11','089665511392','Banyuwangi, Jawa Timur','2023-07-05 12:20:09','2023-07-05 12:20:09'),
-	(3,8,4200000,'Rega Agustira','2022-02-21','2000-01-10','089665511394','Sumedang, Jawa Barat','2023-07-05 12:21:25','2023-07-05 12:21:25'),
-	(4,4,3500000,'Aisha Nur Rani','2021-05-10','2000-05-15','089663152432','Pemalang, Jawa Tengah','2023-07-05 12:22:29','2023-07-05 12:22:29');
+	(1,3,4500000,'Dian Latifah','2022-07-04','2000-09-15','089665511391','Pemalang, Jawa Tengah','TIDAK','2023-07-05 12:18:04','2023-07-05 12:18:04'),
+	(2,3,4500000,'Ahmad Rizaldi Riyan','2021-07-05','1999-09-11','089665511392','Banyuwangi, Jawa Timur','TIDAK','2023-07-05 12:20:09','2023-07-05 12:20:09'),
+	(3,8,4200000,'Rega Agustira','2022-02-21','2000-01-10','089665511394','Sumedang, Jawa Barat','TIDAK','2023-07-05 12:21:25','2023-07-05 12:21:25'),
+	(4,4,3500000,'Aisha Nur Rani','2021-05-10','2000-05-15','089663152432','Pemalang, Jawa Tengah','TIDAK','2023-07-05 12:22:29','2023-07-05 12:22:29');

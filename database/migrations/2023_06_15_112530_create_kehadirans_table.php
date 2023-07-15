@@ -17,7 +17,6 @@ class CreateKehadiransTable extends Migration
             $table->increments('kd_kehadiran');
             $table->string('jumlah_kehadiran');
             $table->integer('jumlah_hari_kerja_kalender');
-            $table->integer('total_gaji');
             $table->timestamps();
         });
     }

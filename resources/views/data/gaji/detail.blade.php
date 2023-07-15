@@ -39,7 +39,7 @@
                                         <div class="col-sm-4 invoice-col mt-3">
                                             Dari
                                             <address>
-                                                <strong>{{ Auth::user()->name }}</strong><br>
+                                                <strong>Admin</strong><br>
                                                 Gedeg, Kec. Comal, Kab. Pemalang, Jawa Tengah<br>
                                                 No. Telp : 0815-4029-619
                                             </address>
@@ -111,7 +111,7 @@
                                     </div>
                                     <div class="row no-print">
                                         <div class="col-12">
-                                            <a href="{{ url('gaji-cetak-pdf/' . $detail->no_slip_gaji) }}" rel="noopener"
+                                            <a href="{{ url('data/gaji-cetak-pdf/' . $detail->no_slip_gaji) }}" rel="noopener"
                                                 target="_blank" class="btn btn-success float-right"><i
                                                     class="fas fa-print"></i>
                                                 Cetak</a>

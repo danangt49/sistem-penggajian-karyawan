@@ -26,6 +26,11 @@
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 {{ session('success') }}
                             </div>
+                        @elseif (session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                {{ session('error') }}
+                            </div>
                         @endif
                         <div class="row">
                             <div class="col-12">
@@ -92,9 +97,13 @@
                         title: 'Nama Jabatan',
                         data: 'nm_jabatan'
                     },
+                    {
+                        title: 'Total Gaji (Rp.)',
+                        data: 'total_gaji'
+                    },
                     @if (Auth::user()->level == 'admin')
                         {
-                            title: 'Action',
+                            title: 'Aksi',
                             data: 'action',
                             orderable: false,
                             searchable: false

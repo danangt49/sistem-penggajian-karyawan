@@ -12,7 +12,6 @@ class Kehadiran extends Model
         'kd_kehadiran',
         'jumlah_kehadiran',
         'jumlah_hari_kerja_kalender',
-        'total_gaji',
     ];
     protected $table = 'kehadirans';
     use HasFactory;

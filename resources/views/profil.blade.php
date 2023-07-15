@@ -25,6 +25,11 @@
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 {{ session('success') }}
                             </div>
+                        @elseif (session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                {{ session('error') }}
+                            </div>
                         @endif
                         <div class="row">
                             <div class="col-md-3">

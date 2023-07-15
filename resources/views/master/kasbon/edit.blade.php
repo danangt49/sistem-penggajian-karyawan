@@ -31,14 +31,14 @@
                                     @csrf
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="name">Nama</label>
                                                         <input type="hidden" name="kd_kasbon" id="kd_kasbon" value="{{ $kasbon->kd_kasbon }}">
                                                         <input type="text" class="form-control" id="nm_kasbon" name="nm_kasbon" value="{{ $kasbon->nm_kasbon }}">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="jumlah_kasbon">Jumlah (Rp.)</label>
                                                         <input type="number" class="form-control" id="jumlah_kasbon" name="jumlah_kasbon" value="{{ $kasbon->jumlah_kasbon }}">
@@ -98,6 +98,7 @@
                 },
                 jumlah_kasbon: {
                     required: "Jumlah Jam Harus Di isi!"
+                    number: "Harus Berupa Angka"
                 },
                 keterangan: {
                     required: "Biaya Harus Di isi!"

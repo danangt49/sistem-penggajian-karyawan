@@ -21,8 +21,8 @@
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-lg-3 col-6">
-                                <div class="small-box bg-info">
+                            <div class="col-lg-2">
+                                <div class="small-box bg-primary">
                                     <div class="inner">
                                         <h3>{{ $total_pegawai }}</h3>
                                         <p>Pegawai</p>
@@ -34,7 +34,20 @@
                                             class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-6">
+                            <div class="col-lg-2">
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3>{{ $total_gaji }}</h3>
+                                        <p>Gaji</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-envelope"></i>
+                                    </div>
+                                    <a href="{{ url('gaji') }}" class="small-box-footer">Selengkapnya... <i
+                                            class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
                                 <div class="small-box bg-success">
                                     <div class="inner">
                                         <h3>{{ $total_tunjangan_skill }}</h3>
@@ -47,7 +60,7 @@
                                         <i class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-6">
+                            <div class="col-lg-2">
                                 <div class="small-box bg-warning">
                                     <div class="inner">
                                         <h3>{{ $total_lembur }}</h3>
@@ -60,7 +73,7 @@
                                             class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-6">
+                            <div class="col-lg-2">
                                 <div class="small-box bg-danger">
                                     <div class="inner">
                                         <h3>{{ $total_kasbon }}</h3>
@@ -73,10 +86,24 @@
                                             class="fas fa-arrow-circle-right"></i></a>
                                 </div>
                             </div>
+                            <div class="col-lg-2">
+                                <div class="small-box bg-secondary">
+                                    <div class="inner">
+                                        <h3>{{ $total_kehadiran }}</h3>
+                                        <p>Kehadiran</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <a href="{{ url('master/kehadiran') }}" class="small-box-footer">Selengkapnya... <i
+                                            class="fas fa-arrow-circle-right"></i></a>
+                                </div>
+                            </div>
+                            <p>{{ Auth::user()->level}}</p>
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <p>Diagram Batang Jurnal Akutansi</p> 
+                                        <p>Diagram Batang & Jurnal Umum</p> 
                                         <hr>
                                         <form id="filter-form" action="{{ route('home') }}" method="GET">
                                             <div class="form-row">
@@ -128,7 +155,7 @@
             var barChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: {!! json_encode($tanggal) !!},
+                    labels: {!! json_encode($bulan) !!},
                     datasets: [{
                         label: 'Kredit',
                         data: kredit,
@@ -149,7 +176,7 @@
                             display: true,
                             title: {
                                 display: true,
-                                text: 'Tanggal Gaji'
+                                text: 'Bulan'
                             }
                         },
                         y: {

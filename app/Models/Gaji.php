@@ -11,6 +11,7 @@ class Gaji extends Model
        'no_slip_gaji',
        'nip',
        'tanggal_gaji',
+       'total_gaji',
        'total_gaji_pokok',
        'total_tunjangan_skill',
        'total_biaya_lembur',

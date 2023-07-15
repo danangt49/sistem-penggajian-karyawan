@@ -16,6 +16,7 @@ class Pegawai extends Model
         'tanggal_lahir',
         'no_telepon',
         'alamat',
+        'status'
     ];
     protected $table = 'pegawais';
     

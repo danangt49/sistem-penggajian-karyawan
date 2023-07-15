@@ -34,9 +34,8 @@
                                                         <label for="nip">Nama Pegawai</label>
                                                         <input type='hidden' class="form-control"  name="no_slip_gaji" value="{{ $gaji->no_slip_gaji }}"/>
                                                         <input type="hidden" class="form-control"  name="id_detail_gaji" value="{{ $gaji->detailGaji->id_detail_gaji }}">
-                                                        <input type="hidden" class="form-control"  name="kd_kehadiran" value="{{ $gaji->detailGaji->kd_kehadiran }}">
                                                         <select class="custom-select rounded-0" id="nip" name="nip">
-                                                            @foreach ( Applib::dd_pegawai() as $key => $value)
+                                                            @foreach ( Applib::dd_pegawai_aktif() as $key => $value)
                                                                 <option value="{{ $key }}" {{ ( $key == $gaji->nip) ? 'selected' : '' }}>{{ $value }}</option>
                                                             @endforeach   
                                                         </select>
@@ -53,7 +52,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     <div class="form-group">
                                                         <label for="kd_tunjangan_skill">Tunjangan Skill</label>
                                                         <select class="custom-select rounded-0" id="kd_tunjangan_skill" name="kd_tunjangan_skill">
@@ -63,7 +62,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     <div class="form-group">
                                                         <label for="kd_kasbon">Kasbon</label>
                                                         <select class="custom-select rounded-0" id="kd_kasbon" name="kd_kasbon">
@@ -73,7 +72,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     <div class="form-group">
                                                         <label for="kd_lembur">Lembur</label>
                                                         <select class="custom-select rounded-0" id="kd_lembur" name="kd_lembur">
@@ -83,16 +82,14 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 mb-3">
+                                                <div class="col-md-3 mb-3">
                                                     <div class="form-group">
-                                                        <label for="jumlah_kehadiran">Jumlah Kehadiran</label>
-                                                        <input type="number" class="form-control" id="jumlah_kehadiran" name="jumlah_kehadiran" value="{{ $gaji->detailGaji->Kehadiran->jumlah_kehadiran }}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="form-group">
-                                                        <label for="jumlah_hari_kerja_kalender">Jumlah Hari Kerja Kalender</label>
-                                                        <input type="number" class="form-control" id="jumlah_hari_kerja_kalender" name="jumlah_hari_kerja_kalender" value="{{ $gaji->detailGaji->Kehadiran->jumlah_hari_kerja_kalender }}">
+                                                        <label for="kd_kehadiran">Kehadiran</label>
+                                                        <select class="custom-select rounded-0" id="kd_kehadiran" name="kd_kehadiran">
+                                                            @foreach ( Applib::dd_kehadiran() as $key => $value)
+                                                            <option value="{{ $key }}" {{ ( $key == $gaji->detailGaji->kd_kehadiran) ? 'selected' : '' }}>{{ $value }}</option>
+                                                            @endforeach   
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
@@ -161,20 +158,15 @@
                 kd_lembur: {
                     required: true,
                 },
-                jumlah_kehadiran: {
+                kd_kehadiran: {
                     required: true,
-                    number:true
-                },
-                jumlah_hari_kerja_kalender: {
-                    required: true,
-                    number:true
                 },
                 keterangan: {
                     required: true,
                 },
             },
             messages: {
-                nip: {
+                n: {
                     required: "Nama Pegawai Harus Di isi!",
                 },
                 kd_tunjangan_skill: {
@@ -186,16 +178,8 @@
                 kd_lembur: {
                     required: "Lembur Harus Di isi!",
                 },
-                nip: {
-                    required: "Nama Pegawai Harus Di isi!",
-                },
-                jumlah_kehadiran: {
-                    required: "Jumlah Kehadiran Harus Di isi!",
-                    number: "Harus Berupa Angka"
-                },
-                jumlah_hari_kerja_kalender: {
-                    required: "Jumlah Hari Kalender Harus Di isi!",
-                    number: "Harus Berupa Angka"
+                kd_kehadiran: {
+                    required: "Kehadiran Harus Di isi!",
                 },
                 keterangan: {
                     required: "Keterangan Harus Di isi!",

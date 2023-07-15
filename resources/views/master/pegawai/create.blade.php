@@ -29,50 +29,56 @@
                                         <h3 class="card-title">Tambah Data Pegawai</h3>
                                     </div>
                                     <form id="form" action="{{ url('master/pegawai-store') }}" method="POST">
-                                    @csrf
+                                        @csrf
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="nip">NIP</label>
-                                                        <input type="number" class="form-control" id="nip" name="nip">
+                                                        <input type="number" class="form-control" id="nip"
+                                                            name="nip" value="{{ Sistem::generateNip() }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="nm_pegawai">Nama</label>
-                                                        <input type="text" class="form-control" id="nm_pegawai" name="nm_pegawai">
+                                                        <input type="text" class="form-control" id="nm_pegawai"
+                                                            name="nm_pegawai">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <div class="form-group">
                                                         <label for="kd_jabatan">Jabatan</label>
-                                                        <select class="custom-select rounded-0" id="kd_jabatan" name="kd_jabatan">
-                                                            @foreach ( Applib::dd_jabatan() as $key => $value)
-                                                                <option value="{{ $key }}"> 
-                                                                    {{ $value }} 
+                                                        <select class="custom-select rounded-0" id="kd_jabatan"
+                                                            name="kd_jabatan" onchange="myFunction(event)">
+                                                            @foreach (Applib::dd_jabatan() as $key => $value)
+                                                                <option value="{{ $key }}">
+                                                                    {{ $value }}
                                                                 </option>
-                                                            @endforeach   
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="form-group">
-                                                        <label for="no_telepon">No. Telp</label>
-                                                        <input type="number" class="form-control" id="no_telepon" name="no_telepon">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <div class="form-group">
                                                         <label for="gaji_pokok">Gaji Pokok</label>
-                                                        <input type="number" class="form-control" id="gaji_pokok" name="gaji_pokok">
+                                                        <input type="number" class="form-control" id="gaji_pokok"
+                                                            name="gaji_pokok">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <div class="form-group">
+                                                        <label for="no_telepon">No. Telp</label>
+                                                        <input type="number" class="form-control" id="no_telepon"
+                                                            name="no_telepon">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="tanggal_lahir">Tanggal Lahir</label>
                                                         <div class='input-group date' id='datetimepicker'>
-                                                            <input type='text' class="form-control" id="tanggal_lahir" name="tanggal_lahir"/>
+                                                            <input type='text' class="form-control" id="tanggal_lahir"
+                                                                name="tanggal_lahir" />
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
@@ -83,7 +89,8 @@
                                                     <div class="form-group">
                                                         <label for="tanggal_masuk">Tanggal Masuk</label>
                                                         <div class='input-group date' id='datetimepicker'>
-                                                            <input type='text' class="form-control" id="tanggal_masuk" name="tanggal_masuk"/>
+                                                            <input type='text' class="form-control" id="tanggal_masuk"
+                                                                name="tanggal_masuk" />
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
                                                             </span>
@@ -114,7 +121,8 @@
 @stop
 
 @section('css')
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.css" rel="stylesheet"
+        type="text/css" />
 @stop
 
 @section('js')
@@ -123,20 +131,34 @@
     <script src="{{ asset('public/admin/asset/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('public/admin/asset/plugins/jquery-validation/additional-methods.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-            
+
     <script>
-        $(function () {
-            $("#tanggal_lahir").datepicker({ 
+        function myFunction(e) {
+            var kd_jabatan = e.target.value;
+            var url = "{{ url('master/json-jabatan') }}" + "/" + kd_jabatan;
+
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("gaji_pokok").value = data.total_gaji;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        $(function() {
+            $("#tanggal_lahir").datepicker({
                 format: 'yyyy-mm-dd',
-                autoclose: true, 
+                autoclose: true,
                 todayHighlight: true
             }).datepicker('update', new Date());
         });
 
-        $(function () {
-            $("#tanggal_masuk").datepicker({ 
+        $(function() {
+            $("#tanggal_masuk").datepicker({
                 format: 'yyyy-mm-dd',
-                autoclose: true, 
+                autoclose: true,
                 todayHighlight: true
             }).datepicker('update', new Date());
         });
@@ -189,14 +211,14 @@
                 },
             },
             errorElement: 'span',
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
-            highlight: function (element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
             },
-            unhighlight: function (element, errorClass, validClass) {
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
         });

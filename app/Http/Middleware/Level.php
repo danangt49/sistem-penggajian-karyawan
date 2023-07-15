@@ -16,7 +16,9 @@ class Level
      */
     public function handle(Request $request, Closure $next)
     {
-        if ($request->user()->level == 'admin' || $request->user()->level == 'user') {
+        if (($request->user()->level == 'admin' && $request->user()->status == 'AKTIF') || 
+            ($request->user()->level == 'pegawai' && $request->user()->status == 'AKTIF') ||
+            ($request->user()->level == 'user' && $request->user()->status == 'AKTIF')) {
             return $next($request);
         }
  

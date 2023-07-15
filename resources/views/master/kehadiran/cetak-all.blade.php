@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="page-header">
-                        <i class="fas fa-globe"></i>Keseluruhan Data User <br> PT Gasaba Sukses Mandiri
+                        <i class="fas fa-globe"></i>Keseluruhan Data kehadiran <br> PT Gasaba Sukses Mandiri
                     </h4>
                 </div>
             </div>
@@ -54,20 +54,16 @@
                         <thead>
                             <tr align="center">
                                 <th>No</th>
-                                <th>Nama User</th>
-                                <th>Email</th>
-                                <th>Level</th>
-                                <th>Status</th>
+                                <th>Jumlah Kehadiran</th>
+                                <th>Jumlah Hari Kerja Kalender</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($all as $item)
                                 <tr align="center">
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>{{ $item->level }}</td>
-                                    <td>{{ $item->status }}</td>
+                                    <td>{{ $item->jumlah_kehadiran }}</td>
+                                    <td>{{ $item->jumlah_hari_kerja_kalender }}</td>
                                 </tr>
                             @endforeach
 

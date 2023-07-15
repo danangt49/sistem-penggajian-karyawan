@@ -32,26 +32,28 @@
                                     @csrf
                                         <div class="card-body">
                                             <div class="row">
+                                                @if ($user->level != "pegawai")
+                                                    <div class="col-md-6 mb-3">
+                                                        <div class="form-group">
+                                                            <label for="level">Level</label>
+                                                            <select class="custom-select rounded-0" id="level" name="level">
+                                                                <option value="admin" <?php if ($user->level=="admin"): ?>selected<?php endif; ?>>Admin</option>
+                                                                <option value="user" <?php if ($user->level=="user"): ?>selected<?php endif; ?>>User</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                @endif
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="name">Nama</label>
                                                         <input type="hidden" name="id" id="id" value="{{ $user->id }}">
-                                                        <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}">
+                                                        <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="email">Email</label>
                                                         <input type="email" class="form-control" id="email" name="email" value="{{ $user->email }}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="form-group">
-                                                        <label for="level">Level</label>
-                                                        <select class="custom-select rounded-0" id="level" name="level">
-                                                            <option value="admin" <?php if ($user->level=="admin"): ?>selected<?php endif; ?>>Admin</option>
-                                                            <option value="user" <?php if ($user->level=="user"): ?>selected<?php endif; ?>>User</option>
-                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,6 +92,10 @@
                     required: true,
                     email: true,
                 },
+                password: {
+                    required: true,
+                    minLength: 8,
+                },
             },
             messages: {
                 name: {
@@ -98,6 +104,10 @@
                 email: {
                     required: "Email Harus Di isi!",
                     email: "Harus Berupa Alamat Email"
+                },
+                password: {
+                    required: "Password Harus Di isi!",
+                    minLength: "Minimal 8 Karakter",
                 },
             },
             errorElement: 'span',

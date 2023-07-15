@@ -21,7 +21,11 @@ class PegawaiController extends Controller
 
     public function index()
     {
-        return view('master.pegawai.home');
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            return view('master.pegawai.home');
+        } else {
+            return view('error.404');
+        }
     }
 
     public function json()
@@ -59,7 +63,7 @@ class PegawaiController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             return view('master.pegawai.create');
         } else {
             return view('error.404');
@@ -68,7 +72,7 @@ class PegawaiController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data = [
                 'nip' => $request->nip,
                 'kd_jabatan' => $request->kd_jabatan,
@@ -78,6 +82,7 @@ class PegawaiController extends Controller
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'no_telepon' => $request->no_telepon,
                 'alamat' => $request->alamat,
+                'status' => 'Aktif',
             ];
 
             Pegawai::create($data);
@@ -89,7 +94,7 @@ class PegawaiController extends Controller
 
     public function edit($nip)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data['pegawai'] = Pegawai::where('nip', $nip)->first();
             return view('master.pegawai.edit')->with($data);
         } else {
@@ -99,7 +104,7 @@ class PegawaiController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data = [
                 'nip' => $request->nip,
                 'kd_jabatan' => $request->kd_jabatan,
@@ -109,6 +114,7 @@ class PegawaiController extends Controller
                 'tanggal_lahir' => $request->tanggal_lahir,
                 'no_telepon' => $request->no_telepon,
                 'alamat' => $request->alamat,
+                'status' => 'Aktif',
             ];
 
             Pegawai::where('nip', $request->nip)->update($data);
@@ -120,7 +126,7 @@ class PegawaiController extends Controller
 
     public function delete($nip)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data = Pegawai::where('nip', $nip)->first();
             $data->delete();
             return redirect('master/pegawai');
@@ -131,9 +137,19 @@ class PegawaiController extends Controller
 
     public function cetak_all()
     {
-        $all = Pegawai::get();
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $all = Pegawai::get();
 
-        $pdf = PDF::loadview('master/pegawai/cetak-all', ['all' => $all]);
-        return $pdf->download('Keseluruhan Data Pegawai ' . Sistem::konversiTanggal(Carbon::now()));
+            $pdf = PDF::loadview('master/pegawai/cetak-all', ['all' => $all]);
+            return $pdf->download('Keseluruhan Data Pegawai ' . Sistem::konversiTanggal(Carbon::now()));
+        } else {
+            return view('error.404');
+        }
+    }
+
+    public function json_get_by_status()
+    {
+        $pegawai = Pegawai::where('status', 'Aktif')->get();
+        return response()->json($pegawai);
     }
 }

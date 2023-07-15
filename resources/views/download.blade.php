@@ -33,9 +33,8 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="page-header">
-                        <i class="fas fa-globe"></i>Jurnal Akutansi <br>
-                        Tanggal {{ Sistem::konversiTanggal($start_date) }} Sampai
-                        {{ Sistem::konversiTanggal($end_date) }} <br> PT Gasaba Sukses Mandiri
+                        <i class="fas fa-globe"></i>Jurnal Umum
+                        <br> PT Gasaba Sukses Mandiri
                     </h4>
                 </div>
             </div>
@@ -55,11 +54,10 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr align="center">
-                                <th>No</th>
-                                <th>Keterangan</th>
                                 <th>Tanggal</th>
-                                <th>Kredit (Rp.)</th>
-                                <th>Debit (Rp.)</th>
+                                <th>Akun</th>
+                                <th>Debet</th>
+                                <th>Kredit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -73,23 +71,22 @@
                                     $total_debit += $item->debit;
                                 @endphp
                                 <tr align="center">
-                                    <td rowspan="2" style="vertical-align: middle;">{{ $loop->iteration }}</td>
-                                    <td>KAS</td>
-                                    <td>{{ Sistem::konversiTanggal($item->tanggal_gaji) }}</td>
+                                    <td>{{ $item->bulan_tahun }}</td>
+                                    <td>Biaya Gaji</td>
                                     <td></td>
-                                    <td>{{ Sistem::formatRupiah($item->debit) }}</td>
+                                    <td>Rp. {{ Sistem::formatRupiah($item->debit) }}</td>
                                 </tr>
                                 <tr align="center">
-                                    <td>Gaji Pegawai</td>
-                                    <td>{{ Sistem::konversiTanggal($item->tanggal_gaji) }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->kredit) }}</td>
+                                    <td>{{ $item->bulan_tahun }}</td>
+                                    <td>Kas</td>
+                                    <td>Rp. {{ Sistem::formatRupiah($item->kredit) }}</td>
                                     <td></td>
                                 </tr>
                             @endforeach
                             <tr align="center">
-                                <td colspan="3"><strong>Total</strong></td>
-                                <td>{{ Sistem::formatRupiah($total_kredit) }}</td>
-                                <td>{{ Sistem::formatRupiah($total_debit) }}</td>
+                                <td colspan="2"><strong>Total</strong></td>
+                                <td>Rp. {{ Sistem::formatRupiah($total_kredit) }}</td>
+                                <td>Rp. {{ Sistem::formatRupiah($total_debit) }}</td>
                             </tr>
                         </tbody>
                     </table>

@@ -19,9 +19,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('level', ['admin', 'user']);
+            $table->enum('level', ['admin', 'user', 'pegawai']);
+            $table->enum('status', ['AKTIF', 'TIDAK']);
             $table->rememberToken();
             $table->timestamps();
+
+            $table->foreign('nip')->references('nip')->on('pegawais')->onDelete('cascade');  
         });
     }
 

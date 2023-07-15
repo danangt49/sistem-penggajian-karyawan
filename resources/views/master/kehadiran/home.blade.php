@@ -5,13 +5,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Kasbon</h1>
+                        <h1 class="m-0">Kehadiran</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
                             <li class="breadcrumb-item">Master</li>
-                            <li class="breadcrumb-item active">Kasbon</li>
+                            <li class="breadcrumb-item active">Kehadiran</li>
                         </ol>
                     </div>
                 </div>
@@ -36,13 +36,13 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h3 class="card-title">Data Kasbon</h3>
+                                        <h3 class="card-title">Data Kehadiran</h3>
                                         @if (Auth::user()->level == 'admin')
-                                            <a href="{{ url('master/kasbon/form') }}" class="btn btn-primary float-right"><i
+                                            <a href="{{ url('master/kehadiran/form') }}" class="btn btn-primary float-right"><i
                                                     class="fas fa-plus"></i> Tambah</a>
                                         @endif
 
-                                        <a href="{{ url('master/kasbon-cetak-all-pdf') }}"
+                                        <a href="{{ url('master/kehadiran-cetak-all-pdf') }}"
                                             class="btn btn-success float-right" style="margin-right: 10px;"><i
                                                 class="fas fa-print"></i> Cetak</a>
                                     </div>
@@ -85,7 +85,7 @@
             $('#datatable').dataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ url('master/json-kasbon') }}",
+                ajax: "{{ url('master/json-kehadiran') }}",
                 columns: [{
                         title: 'No',
                         data: null,
@@ -94,16 +94,12 @@
                         }
                     },
                     {
-                        title: 'Nama',
-                        data: 'nm_kasbon'
+                        title: 'Jumlah Kehadiran',
+                        data: 'jumlah_kehadiran'
                     },
                     {
-                        title: 'Nominal (Rp.)',
-                        data: 'jumlah_kasbon'
-                    },
-                    {
-                        title: 'Keterangan',
-                        data: 'keterangan'
+                        title: 'Jumlah Hari Kerja Kalender',
+                        data: 'jumlah_hari_kerja_kalender'
                     },
                     @if (Auth::user()->level == 'admin')
                         {
@@ -119,7 +115,7 @@
 
         $('body').on('click', '.delete', function() {
             var csrf_token = "{{ csrf_token() }}";
-            var document_kd_kasbon = $(this).data("kd_kasbon");
+            var document_kd_kehadiran = $(this).data("kd_kehadiran");
             swal({
                     title: "Apakah Anda Yakin ?",
                     text: "Anda Akan Menghapus Item Ini ?",
@@ -130,7 +126,7 @@
                 .then((result) => {
                     if (result.value) {
                         $.ajax({
-                            url: "{{ url('master/kasbon-delete') }}" + '/' + document_kd_kasbon,
+                            url: "{{ url('master/kehadiran-delete') }}" + '/' + document_kd_kehadiran,
                             type: "POST",
                             data: {
                                 '_method': 'GET',

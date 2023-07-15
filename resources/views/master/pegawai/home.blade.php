@@ -27,6 +27,11 @@
                                 <button type="button" class="close" data-dismiss="alert">×</button>
                                 {{ session('success') }}
                             </div>
+                        @elseif (session('error'))
+                            <div class="alert alert-danger" role="alert">
+                                <button type="button" class="close" data-dismiss="alert">×</button>
+                                {{ session('error') }}
+                            </div>
                         @endif
                         <div class="row">
                             <div class="col-12">
@@ -121,9 +126,20 @@
                         title: 'Alamat',
                         data: 'alamat'
                     },
+                    {
+                        title: 'Status',
+                        data: 'status',
+                        render: function(data) {
+                            if (data == "Aktif Terdaftar") {
+                                return '<span class="badge badge-success">Aktif</span>';
+                            } else {
+                                return '<span class="badge badge-danger">Tidak</span>';
+                            }
+                        }
+                    },
                     @if (Auth::user()->level == 'admin')
                         {
-                            title: 'Action',
+                            title: 'Aksi',
                             data: 'action',
                             orderable: false,
                             searchable: false

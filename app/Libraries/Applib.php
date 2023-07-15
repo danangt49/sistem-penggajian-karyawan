@@ -5,6 +5,7 @@ namespace App\Libraries;
 use App\Models\Jabatan;
 use App\Models\Pegawai;
 use App\Models\Kasbon;
+use App\Models\Kehadiran;
 use App\Models\Lembur;
 use App\Models\TunjanganSkill;
 
@@ -22,7 +23,18 @@ class Applib
 	}
 
 	public static function dd_pegawai(){
-		$query                          = Pegawai::get();
+		$query                          = Pegawai::where('status', 'Aktif')->get();
+		$dd['']                         = '=== Pilih Pegawai ===';
+		if ($query->count() > 0){
+			foreach($query as $row){
+				$dd[$row->nip] = $row->nm_pegawai;
+			}
+		}
+		return $dd;
+	}
+
+	public static function dd_pegawai_aktif(){
+		$query                          = Pegawai::where('status', 'Aktif Terdaftar')->get();
 		$dd['']                         = '=== Pilih Pegawai ===';
 		if ($query->count() > 0){
 			foreach($query as $row){
@@ -65,11 +77,34 @@ class Applib
 		return $dd;
 	}
 
+	public static function dd_kehadiran(){
+		$query                       = Kehadiran::get();
+		$dd['']                      = '=== Pilih Kehadiran ===';
+		if ($query->count() > 0){
+			foreach($query as $row){
+				$dd[$row->kd_kehadiran] = $row->jumlah_kehadiran . ' Kehadiran/ '. $row->jumlah_hari_kerja_kalender . ' Hari Kerja Kalender' ;
+			}
+		}
+		return $dd;
+	}
+
     public static function getJabatan($kd_jabatan){
 		$query                          = Jabatan::where('kd_jabatan', $kd_jabatan)->get();
 		if($query->count() > 0){
 			foreach($query as $h){
 				$hasil = $h->nm_jabatan;
+			}
+		}else{
+			$hasil = '';
+		}
+		return $hasil;
+	}
+
+	public static function getTotalGajiJabatan($kd_jabatan){
+		$query                          = Jabatan::where('kd_jabatan', $kd_jabatan)->get();
+		if($query->count() > 0){
+			foreach($query as $h){
+				$hasil = $h->total_gaji;
 			}
 		}else{
 			$hasil = '';

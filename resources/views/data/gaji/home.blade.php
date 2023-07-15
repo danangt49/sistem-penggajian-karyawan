@@ -19,27 +19,12 @@
             <div class="container-fluid">
                 <section class="content">
                     <div class="container-fluid">
-                        @if (session('success'))
-                            <div class="alert alert-success" role="alert">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                {{ session('success') }}
-                            </div>
-                        @elseif (session('error'))
-                            <div class="alert alert-danger" role="alert">
-                                <button type="button" class="close" data-dismiss="alert">×</button>
-                                {{ session('error') }}
-                            </div>
-                        @endif
                         <div class="row">
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">Data Gaji</h3>
-                                        @if (Auth::user()->level == 'admin')
-                                            <a href="{{ url('gaji/form') }}" class="btn btn-primary float-right"><i
-                                                    class="fas fa-plus"></i> Tambah</a>
-                                        @endif
-                                        <a href="{{ url('gaji-cetak-all-pdf') }}" class="btn btn-success float-right"
+                                        <a href="{{ url('data/gaji-cetak-all-pdf') }}" class="btn btn-success float-right"
                                             style="margin-right: 10px;"><i class="fas fa-print"></i> Cetak</a>
                                     </div>
                                     <div class="card-body">
@@ -81,7 +66,7 @@
             $('#datatable').dataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ url('json-gaji') }}",
+                ajax: "{{ url('data/json-gaji') }}",
                 columns: [{
                         title: 'No',
                         data: null,
@@ -128,70 +113,20 @@
                             }
                         }
                     },
-                    @if (Auth::user()->level == 'admin')
-                        {
-                            title: 'Aksi',
-                            data: 'action',
-                            orderable: false,
-                            searchable: false
-                        }
-                    @endif
-                    @if (Auth::user()->level == 'user')
-                        {
-                            title: 'Gaji Bersih',
-                            data: 'gaji_bersih'
 
-                        }
-                    @endif
+                    {
+                        title: 'Gaji Bersih',
+                        data: 'gaji_bersih'
+
+                    },
+                    {
+                        title: 'Aksi',
+                        data: 'action',
+                        orderable: false,
+                        searchable: false
+                    },
                 ]
             });
-        });
-
-        $('body').on('click', '.delete', function() {
-            var csrf_token = "{{ csrf_token() }}";
-            var document_no_slip_gaji = $(this).data("no_slip_gaji");
-            swal({
-                    title: "Apakah Anda Yakin ?",
-                    text: "Anda Akan Menghapus Item Ini ?",
-                    type: "warning",
-                    confirmButtonText: "Ya, Hapus",
-                    showCancelButton: true
-                })
-                .then((result) => {
-                    if (result.value) {
-                        $.ajax({
-                            url: "{{ url('gaji-delete') }}" + '/' + document_no_slip_gaji,
-                            type: "POST",
-                            data: {
-                                '_method': 'GET',
-                                '_token': csrf_token
-                            },
-                            success: function() {
-                                swal(
-                                    'Sukses',
-                                    'Hapus Data <b style="color:green;">Sukses</b> Klik OK!',
-                                    'success'
-                                ).then(function() {
-                                    location.reload();
-                                });
-                            },
-                            error: function() {
-                                swal({
-                                    title: 'Opps...',
-                                    text: 'Error',
-                                    type: 'error',
-                                    timer: '1500'
-                                })
-                            }
-                        });
-                    } else if (result.dismiss === 'cancel') {
-                        swal(
-                            'Dibatalkan',
-                            'Tetap Di Halaman Ini',
-                            'error'
-                        )
-                    }
-                })
         });
     </script>
 @stop

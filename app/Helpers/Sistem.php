@@ -1,6 +1,8 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\Pegawai;
+
 class Sistem {
 
 	public static function konversiTanggal($tanggal)
@@ -26,4 +28,11 @@ class Sistem {
 		return $rupiah;
 	}
 
+	public static function generateNip() 
+	{
+		$today = date('mY');
+		$totalPegawai = Pegawai::count()+1;
+		$generatedNumber = $today .'0'. $totalPegawai;
+		return $generatedNumber;
+	}
 }

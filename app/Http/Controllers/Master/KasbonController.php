@@ -21,7 +21,11 @@ class KasbonController extends Controller
 
     public function index()
     {
-        return view('master.kasbon.home');
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            return view('master.kasbon.home');
+        } else {
+            return view('error.404');
+        }
     }
 
     public function json()
@@ -56,7 +60,7 @@ class KasbonController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             return view('master.kasbon.create');
         } else {
             return view('error.404');
@@ -65,7 +69,12 @@ class KasbonController extends Controller
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $exiting = Kasbon::where('jumlah_kasbon', $request->jumlah_kasbon)->exists();
+
+            if ($exiting) {
+                return redirect('master/kasbon')->with('error', 'Data sudah ada.');
+            }
             $data = [
                 'kd_kasbon' => $request->kd_kasbon,
                 'nm_kasbon' => $request->nm_kasbon,
@@ -82,7 +91,7 @@ class KasbonController extends Controller
 
     public function edit($kd_kasbon)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data['kasbon'] = Kasbon::where('kd_kasbon', $kd_kasbon)->first();
             return view('master.kasbon.edit')->with($data);
         } else {
@@ -92,7 +101,15 @@ class KasbonController extends Controller
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $exiting = Kasbon::where('kd_kasbon', '!=', $request->kd_kasbon)
+                ->where('jumlah_kasbon', $request->jumlah_kasbon)
+                ->exists();
+
+            if ($exiting) {
+                return redirect('master/kasbon')->with('error', 'Data sudah ada.');
+            }
+
             $data = [
                 'kd_kasbon' => $request->kd_kasbon,
                 'nm_kasbon' => $request->nm_kasbon,
@@ -109,7 +126,7 @@ class KasbonController extends Controller
 
     public function delete($kd_kasbon)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data = Kasbon::find($kd_kasbon);
             $data->delete();
             return redirect('master/kasbon');
@@ -120,9 +137,13 @@ class KasbonController extends Controller
 
     public function cetak_all()
     {
-        $all = Kasbon::get();
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $all = Kasbon::get();
 
-        $pdf = PDF::loadview('master/kasbon/cetak-all', ['all' => $all]);
-        return $pdf->download('Keseluruhan Data Kasbon ' . Sistem::konversiTanggal(Carbon::now()));
+            $pdf = PDF::loadview('master/kasbon/cetak-all', ['all' => $all]);
+            return $pdf->download('Keseluruhan Data Kasbon ' . Sistem::konversiTanggal(Carbon::now()));
+        } else {
+            return view('error.404');
+        }
     }
 }

@@ -45,26 +45,26 @@
                                                         <input type="text" class="form-control" id="nm_pegawai" name="nm_pegawai" value="{{ $pegawai->nm_pegawai }}">
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <div class="form-group">
                                                         <label for="kd_jabatan">Jabatan</label>
-                                                        <select class="custom-select rounded-0" id="kd_jabatan" name="kd_jabatan">
+                                                        <select class="custom-select rounded-0" id="kd_jabatan" name="kd_jabatan" onchange="myFunction(event)">
                                                             @foreach ( Applib::dd_jabatan() as $key => $value)
                                                                 <option value="{{ $key }}" {{ ( $key == $pegawai->kd_jabatan) ? 'selected' : '' }}>{{ $value }}</option>
                                                             @endforeach   
                                                         </select>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="form-group">
-                                                        <label for="no_telepon">No. Telp</label>
-                                                        <input type="number" class="form-control" id="no_telepon" name="no_telepon" value="{{ $pegawai->no_telepon }}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
+                                                <div class="col-md-4 mb-3">
                                                     <div class="form-group">
                                                         <label for="gaji_pokok">Gaji Pokok</label>
                                                         <input type="number" class="form-control" id="gaji_pokok" name="gaji_pokok" value="{{ $pegawai->gaji_pokok }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <div class="form-group">
+                                                        <label for="no_telepon">No. Telp</label>
+                                                        <input type="number" class="form-control" id="no_telepon" name="no_telepon" value="{{ $pegawai->no_telepon }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">
@@ -124,6 +124,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
             
     <script>
+        function myFunction(e) {
+            var kd_jabatan = e.target.value;
+            var url = "{{ url('master/json-jabatan') }}" + "/" + kd_jabatan;
+
+            fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("gaji_pokok").value = data.total_gaji;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
         $(function () {
             $("#tanggal_lahir").datepicker({ 
                 format: 'yyyy-mm-dd',

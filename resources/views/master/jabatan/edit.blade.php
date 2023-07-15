@@ -31,11 +31,17 @@
                                     @csrf
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-12 mb-3">
+                                                <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="name">Nama Jabatan</label>
                                                         <input type="hidden" name="kd_jabatan" id="kd_jabatan" value="{{ $jabatan->kd_jabatan }}">
                                                         <input type="text" class="form-control" id="nm_jabatan" name="nm_jabatan" value="{{ $jabatan->nm_jabatan }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <div class="form-group">
+                                                        <label for="name">Total Gaji</label>
+                                                        <input type="number" class="form-control" id="total_gaji" name="total_gaji" value="{{ $jabatan->total_gaji }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -70,10 +76,18 @@
                 nm_jabatan: {
                     required: true,
                 },
+                total_gaji: {
+                    required: true,
+                    number: true
+                },
             },
             messages: {
                 nm_jabatan: {
                     required: "Nama Jabatan Harus Di isi!",
+                },
+                total_gaji: {
+                    required: "Total Gaji Harus Di isi!",
+                    number: "Harus Berupa Angka"
                 },
             },
             errorElement: 'span',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Master;
 
 use App\Helpers\Sistem;
 use App\Http\Controllers\Controller;
+use App\Models\Pegawai;
 use App\Models\User;
 use App\Rules\MatchOldPassword;
 use Carbon\Carbon;
@@ -12,7 +13,6 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use PDF;
 use Yajra\DataTables\Facades\DataTables;
-
 class UserController extends Controller
 {
     public function __construct()
@@ -22,7 +22,11 @@ class UserController extends Controller
 
     public function index()
     {
-        return view('master.user.home');
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            return view('master.user.home');
+        } else {
+            return view('error.404');
+        }
     }
 
     public function json()
@@ -48,16 +52,22 @@ class UserController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             return view('master.user.create');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $exiting = User::where('email', $request->email)->exists();
+
+            if ($exiting) {
+                return redirect('master/user')->with('error', 'Email Sudah Dipake');
+            }
+
             $data = [
                 'name' => $request->name,
                 'level' => $request->level,
@@ -65,47 +75,72 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
             ];
 
+            $data2 = [
+                'status' => 'Aktif Terdaftar',
+            ];
+
             User::create($data);
+            Pegawai::where('nm_pegawai', $request->name)->update($data2);
             return redirect('master/user')->with('success', 'Data Sukses Ditambahkan');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function edit($id)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data['user'] = User::find($id);
             return view('master.user.edit')->with($data);
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
-            $data = [
-                'name' => $request->name,
-                'level' => $request->level,
-                'email' => $request->email,
-            ];
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $exiting = User::where('id', '!=', $request->id)
+                ->where('email', $request->email)
+                ->exists();
 
-            User::where('id', $$request->id)->update($data);
+            if ($exiting) {
+                return redirect('master/user')->with('error', 'Email Sudah Dipake');
+            }
+
+            if ($request->level != null) {
+                $data = [
+                    'name' => $request->name,
+                    'level' => $request->level,
+                    'email' => $request->email,
+                ];
+            } else {
+                $data = [
+                    'name' => $request->name,
+                    'email' => $request->email,
+                ];
+            }
+
+            User::where('id', $request->id)->update($data);
             return redirect('master/user')->with('success', 'Data Sukses Diperbarui');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function delete($id)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data = User::find($id);
+            $data2 = [
+                'status' => 'Aktif',
+            ];
+
+            Pegawai::where('nm_pegawai', $data->name)->update($data2);
             $data->delete();
             return redirect('master/user');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
@@ -134,9 +169,13 @@ class UserController extends Controller
 
     public function cetak_all()
     {
-        $all = User::get();
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $all = User::get();
 
-        $pdf = PDF::loadview('master/user/cetak-all', ['all' => $all]);
-        return $pdf->download('Keseluruhan Data User ' . Sistem::konversiTanggal(Carbon::now()));
+            $pdf = PDF::loadview('master/user/cetak-all', ['all' => $all]);
+            return $pdf->download('Keseluruhan Data User ' . Sistem::konversiTanggal(Carbon::now()));
+        } else {
+            return view('error.404');
+        }
     }
 }

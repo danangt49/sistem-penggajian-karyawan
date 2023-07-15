@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('content')
     <div class="content-wrapper">
         <div class="content-header">
@@ -29,13 +30,23 @@
                                         <h3 class="card-title">Tambah Data User</h3>
                                     </div>
                                     <form id="form" action="{{ url('master/user-store') }}" method="POST">
-                                    @csrf
+                                        @csrf
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
+                                                        <label for="role">Level</label>
+                                                        <select class="custom-select rounded-0" id="level" name="level">
+                                                            <option value="">=== Pilih Level ===</option>
+                                                            <option value="admin">Admin</option>
+                                                            <option value="pegawai">Pegawai</option>
+                                                            <option value="user">User</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <div class="form-group">
                                                         <label for="name">Nama</label>
-                                                        <input type="hidden" name="id" id="id">
                                                         <input type="text" class="form-control" id="name" name="name">
                                                     </div>
                                                 </div>
@@ -49,15 +60,6 @@
                                                     <div class="form-group">
                                                         <label for="Password">Password</label>
                                                         <input type="password" class="form-control" id="password" name="password">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 mb-3">
-                                                    <div class="form-group">
-                                                        <label for="role">Level</label>
-                                                        <select class="custom-select rounded-0" id="level" name="level">
-                                                            <option value="admin">Admin</option>
-                                                            <option value="user">User</option>
-                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -75,10 +77,10 @@
             </div>
         </div>
     </div>
-@stop
+@endsection
 
 @section('css')
-@stop
+@endsection
 
 @section('js')
     <script src="{{ asset('public/admin/asset/plugins/jquery/jquery.min.js') }}"></script>
@@ -87,6 +89,49 @@
     <script src="{{ asset('public/admin/asset/plugins/jquery-validation/additional-methods.min.js') }}"></script>
             
     <script>
+     var inputNama = document.getElementById('name');
+    var selectRole = document.getElementById('level');
+
+    function changeInputType() {
+    if (selectRole.value === 'pegawai') {
+        fetch('{{ url('master/json-status') }}')
+            .then(response => response.json())
+            .then(data => {
+                var selectNama = document.createElement('select');
+                selectNama.setAttribute('name', 'name');
+                selectNama.setAttribute('class', 'custom-select');
+
+                var defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.text = '=== Pilih Nama Pegawai===';
+                selectNama.appendChild(defaultOption);
+
+                data.forEach(item => {
+                    var option = document.createElement('option');
+                    option.value = item.nm_pegawai;
+                    option.text = item.nm_pegawai;
+                    selectNama.appendChild(option);
+                });
+
+                inputNama.parentNode.replaceChild(selectNama, inputNama);
+                inputNama = selectNama; // Update reference to the new input element
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    } else {
+        var inputNamaNew = document.createElement('input');
+        inputNamaNew.setAttribute('type', 'text');
+        inputNamaNew.setAttribute('name', 'name');
+        inputNamaNew.setAttribute('class', 'form-control');
+        inputNama.parentNode.replaceChild(inputNamaNew, inputNama);
+        inputNama = inputNamaNew; // Update reference to the new input element
+    }
+}
+
+
+    selectRole.addEventListener('change', changeInputType);
+
         $('#form').validate({
             rules: {
                 name: {
@@ -98,7 +143,10 @@
                 },
                 password: {
                     required: true,
-                    minLength: 8,
+                    minlength: 8,
+                },
+                level: {
+                    required: true,
                 },
             },
             messages: {
@@ -111,7 +159,10 @@
                 },
                 password: {
                     required: "Password Harus Di isi!",
-                    minLength: "Minimal 8 Karakter",
+                    minlength: "Minimal 8 Karakter",
+                },
+                level: {
+                    required: "Level Harus Di isi!",
                 },
             },
             errorElement: 'span',
@@ -127,4 +178,4 @@
             }
         });
     </script>
-@stop
+@endsection

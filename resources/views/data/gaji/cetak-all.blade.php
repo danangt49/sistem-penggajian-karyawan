@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="page-header">
-                        <i class="fas fa-globe"></i>Keseluruhan Data Pegawai <br> PT Gasaba Sukses Mandiri
+                        <i class="fas fa-globe"></i>Laporan Gaji Seluruh Pegawai <br> PT Gasaba Sukses Mandiri
                     </h4>
                 </div>
             </div>
@@ -41,7 +41,7 @@
             <div class="row invoice-info">
                 <div class="col-sm-4 invoice-col">
                     <address>
-                        <strong>{{ Auth::user()->name }}</strong><br>
+                        <strong>Admin</strong><br>
                         Gedeg, Kec. Comal, Kab. Pemalang, Jawa Tengah<br>
                         No. Telp : 0815-4029-619 <br>
                         Tanggal : {{ Sistem::konversiTanggal(\Carbon\Carbon::now()) }}
@@ -53,31 +53,37 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr align="center">
-                                <th>No</th>
                                 <th>NIP</th>
-                                <th>Nama Pegawai</th>
-                                <th>Jabatan</th>
-                                <th>Gaji Pokok(Rp.)</th>
-                                <th>Tanggal Lahir</th>
-                                <th>Tanggal Masuk</th>
-                                <th>No. Telp</th>
-                                <th>Alamat</th>
-                                <th>Status</th>
+                                <th>Nama</th>
+                                <th>Gaji Pokok (Rp.)</th>
+                                <th>Jumlah Kehadiran/Dari (Hari)</th>
+                                <th>Gaji Berdasarkan Kehadiran (Rp.)</th>
+                                <th>Tunjangan Skill</th>
+                                <th>Jumlah Lembur Jam/Rp.</th>
+                                <th>Kasbon</th>
+                                <th>Total Tunjangan Skill (Rp.)</th>
+                                <th>Total Lembur (Rp.)</th>
+                                <th>Total Kasbon (Rp.)</th>
+                                <th>Gaji Bersih (Rp.)</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($all as $item)
                                 <tr align="center">
-                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nip }}</td>
-                                    <td>{{ $item->nm_pegawai }}</td>
-                                    <td>{{ $item->jabatan->nm_jabatan }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->gaji_pokok) }}</td>
-                                    <td>{{ Sistem::konversiTanggal($item->tanggal_lahir) }}</td>
-                                    <td>{{ Sistem::konversiTanggal($item->tanggal_masuk) }}</td>
-                                    <td>{{ $item->no_telepon }}</td>
-                                    <td>{{ $item->alamat }}</td>
-                                    <td>{{ $item->status }}</td>
+                                    <td>{{ $item->pegawai->nm_pegawai }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->total_gaji_pokok) }}</td>
+                                    <td>{{ $item->detailGaji->kehadiran->jumlah_kehadiran }} /
+                                        {{ $item->detailGaji->kehadiran->jumlah_hari_kerja_kalender }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->total_gaji) }}</td>
+                                    <td>{{ $item->detailGaji->tunjangan->nm_tunjangan_skill }}</td>
+                                    <td>{{ $item->detailGaji->lembur->jumlah_jam_lembur }}/{{ Sistem::formatRupiah($item->detailGaji->lembur->biaya_lembur_perjam) }}
+                                    </td>
+                                    <td>{{ $item->detailGaji->kasbon->nm_kasbon }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->detailGaji->sub_total_tunjangan_skill) }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->detailGaji->sub_total_lembur) }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->detailGaji->sub_total_kasbon) }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->gaji_bersih) }}</td>
                                 </tr>
                             @endforeach
 

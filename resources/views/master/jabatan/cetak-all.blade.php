@@ -55,6 +55,7 @@
                             <tr align="center">
                                 <th>No</th>
                                 <th>Nama Jabatan</th>
+                                <th>Total Gaji (Rp.)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,6 +63,7 @@
                                 <tr align="center">
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->nm_jabatan }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->total_gaji) }}</td>
                                 </tr>
                             @endforeach
 

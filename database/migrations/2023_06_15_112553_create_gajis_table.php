@@ -18,6 +18,7 @@ class CreateGajisTable extends Migration
             $table->unsignedInteger('nip');
             $table->date('tanggal_gaji');
             $table->integer('total_gaji_pokok');
+            $table->integer('total_gaji');
             $table->integer('total_tunjangan_skill');
             $table->integer('total_biaya_lembur');
             $table->integer('total_kasbon');

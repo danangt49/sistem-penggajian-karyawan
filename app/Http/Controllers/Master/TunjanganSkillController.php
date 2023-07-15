@@ -21,7 +21,11 @@ class TunjanganSkillController extends Controller
 
     public function index()
     {
-        return view('master.tunjangan.home');
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            return view('master.tunjangan.home');
+        } else {
+            return view('error.404');
+        }
     }
 
     public function json()
@@ -55,16 +59,24 @@ class TunjanganSkillController extends Controller
 
     public function create()
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             return view('master.tunjangan.create');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $exiting = TunjanganSkill::where('nm_tunjangan_skill', $request->nm_tunjangan_skill)
+                ->where('jumlah_tunjangan_skill', $request->jumlah_tunjangan_skill)
+                ->exists();
+
+            if ($exiting) {
+                return redirect('master/tunjangan-skill')->with('error', 'Data sudah ada.');
+            }
+
             $data = [
                 'kd_tunjangan_skill' => $request->kd_tunjangan_skill,
                 'nm_tunjangan_skill' => $request->nm_tunjangan_skill,
@@ -75,23 +87,32 @@ class TunjanganSkillController extends Controller
             TunjanganSkill::create($data);
             return redirect('master/tunjangan-skill')->with('success', 'Data Sukses Ditambahkan');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function edit($kd_tunjangan_skill)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data['tunjangan'] = TunjanganSkill::where('kd_tunjangan_skill', $kd_tunjangan_skill)->first();
             return view('master.tunjangan.edit')->with($data);
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function update(Request $request)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $exiting = TunjanganSkill::where('kd_tunjangan_skill', '!=', $request->kd_tunjangan_skill)
+                ->where('nm_tunjangan_skill', $request->nm_tunjangan_skill)
+                ->where('jumlah_tunjangan_skill', $request->jumlah_tunjangan_skill)
+                ->exists();
+
+            if ($exiting) {
+                return redirect('master/tunjangan-skill')->with('error', 'Data sudah ada.');
+            }
+
             $data = [
                 'kd_tunjangan_skill' => $request->kd_tunjangan_skill,
                 'nm_tunjangan_skill' => $request->nm_tunjangan_skill,
@@ -102,26 +123,30 @@ class TunjanganSkillController extends Controller
             TunjanganSkill::where('kd_tunjangan_skill', $request->kd_tunjangan_skill)->update($data);
             return redirect('master/tunjangan-skill')->with('success', 'Data Sukses Diperbarui');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function delete($kd_tunjangan_skill)
     {
-        if (Gate::allows('isAdmin')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
             $data = TunjanganSkill::where('kd_tunjangan_skill', $kd_tunjangan_skill)->first();
             $data->delete();
             return redirect('master/tunjangan-skill');
         } else {
-             return view('error.404');
+            return view('error.404');
         }
     }
 
     public function cetak_all()
     {
-        $all = TunjanganSkill::get();
+        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+            $all = TunjanganSkill::get();
 
-        $pdf = PDF::loadview('master/tunjangan/cetak-all', ['all' => $all]);
-        return $pdf->download('Keseluruhan Data Tunjangan Skill ' . Sistem::konversiTanggal(Carbon::now()));
+            $pdf = PDF::loadview('master/tunjangan/cetak-all', ['all' => $all]);
+            return $pdf->download('Keseluruhan Data Tunjangan Skill ' . Sistem::konversiTanggal(Carbon::now()));
+        } else {
+            return view('error.404');
+        }
     }
 }

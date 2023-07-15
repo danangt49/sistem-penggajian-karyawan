@@ -18,6 +18,7 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Masuk ke Halaman Website</p>
+      <p class="login-box-msg">PT. GASABA SUKSES MANDIRI</p>
 
       <form method="POST" action="{{ route('login') }}">
         @csrf

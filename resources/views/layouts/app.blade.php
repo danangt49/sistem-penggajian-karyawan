@@ -57,7 +57,7 @@
             <a href="{{ url('/') }}" class="brand-link">
                 <img src="{{ asset('public/img/logo.png') }}" alt="AdminLTE Logo"
                     class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">SISGAWAN</span>
+                <span class="brand-text font-weight-light">Sistem Penggajian</span>
             </a>
             <div class="sidebar">
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -68,75 +68,97 @@
                         <a href="{{ url('profil') }}" class="d-block">{{ auth::user()->name }}</a>
                     </div>
                 </div>
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ url('/') }}"
-                                class="nav-link {{ request()->is('/') || request()->is('home') || request()->is('dashboard') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-home"></i>
-                                <p>Dashboard</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link {{ request()->is('master') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-th"></i>
-                                <p> Master <i class="fas fa-angle-left right"></i> </p>
-                            </a>
-                            <ul class="nav nav-treeview" style="display: none;">
-                                <li class="nav-item">
-                                    <a href="{{ url('master/user') }}"
-                                        class="nav-link {{ request()->is('master/user') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>User</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('master/jabatan') }}"
-                                        class="nav-link {{ request()->is('master/jabatan') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Jabatan</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('master/pegawai') }}"
-                                        class="nav-link {{ request()->is('master/pegawai') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Pegawai</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('master/tunjangan-skill') }}"
-                                        class="nav-link {{ request()->is('master/tunjangan-skill') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Tunjangan Skill</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('master/lembur') }}"
-                                        class="nav-link {{ request()->is('master/lembur') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Lembur</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="{{ url('master/kasbon') }}"
-                                        class="nav-link {{ request()->is('master/kasbon') ? 'active' : '' }}">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Kasbon</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ url('gaji') }}"
-                                class="nav-link {{ request()->is('gaji') ? 'active' : '' }}">
-                                <i class="nav-icon fas fa-chart-pie"></i>
-                                <p>Gaji</p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                @if (Auth::user()->level == 'admin' || Auth::user()->level == 'user')
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                            data-accordion="false">
+                            <li class="nav-item">
+                                <a href="{{ url('/') }}"
+                                    class="nav-link {{ request()->is('/') || request()->is('home') || request()->is('dashboard') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-home"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link {{ request()->is('master') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-th"></i>
+                                    <p> Master <i class="fas fa-angle-left right"></i> </p>
+                                </a>
+                                <ul class="nav nav-treeview" style="display: none;">
+                                    <li class="nav-item">
+                                        <a href="{{ url('master/user') }}"
+                                            class="nav-link {{ request()->is('master/user') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>User</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('master/jabatan') }}"
+                                            class="nav-link {{ request()->is('master/jabatan') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Jabatan</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('master/pegawai') }}"
+                                            class="nav-link {{ request()->is('master/pegawai') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Pegawai</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('master/tunjangan-skill') }}"
+                                            class="nav-link {{ request()->is('master/tunjangan-skill') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Tunjangan Skill</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('master/lembur') }}"
+                                            class="nav-link {{ request()->is('master/lembur') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Lembur</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('master/kasbon') }}"
+                                            class="nav-link {{ request()->is('master/kasbon') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Kasbon</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="{{ url('master/kehadiran') }}"
+                                            class="nav-link {{ request()->is('master/kehadiran') ? 'active' : '' }}">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Kehadiran</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ url('gaji') }}"
+                                    class="nav-link {{ request()->is('gaji') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-chart-pie"></i>
+                                    <p>Gaji</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                @else
+                    <nav class="mt-2">
+                        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                            data-accordion="false">
+                            <li class="nav-item">
+                                <a href="{{ url('/') }}"
+                                    class="nav-link {{ request()->is('/') || request()->is('home') || request()->is('dashboard') ? 'active' : '' }}">
+                                    <i class="nav-icon fas fa-home"></i>
+                                    <p>Dashboard</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                @endif
             </div>
         </aside>
 
