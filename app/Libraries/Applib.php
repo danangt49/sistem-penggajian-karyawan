@@ -22,19 +22,8 @@ class Applib
 		return $dd;
 	}
 
-	public static function dd_pegawai(){
-		$query                          = Pegawai::where('status', 'Aktif')->get();
-		$dd['']                         = '=== Pilih Pegawai ===';
-		if ($query->count() > 0){
-			foreach($query as $row){
-				$dd[$row->nip] = $row->nm_pegawai;
-			}
-		}
-		return $dd;
-	}
-
 	public static function dd_pegawai_aktif(){
-		$query                          = Pegawai::where('status', 'Aktif Terdaftar')->get();
+		$query                          = Pegawai::where('status', 'Aktif')->get();
 		$dd['']                         = '=== Pilih Pegawai ===';
 		if ($query->count() > 0){
 			foreach($query as $row){
