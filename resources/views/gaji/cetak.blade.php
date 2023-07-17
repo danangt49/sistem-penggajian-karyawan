@@ -29,7 +29,9 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="page-header">
-                        <i class="fas fa-globe"></i> PT Gasaba Sukses Mandiri
+                        <img src="https://drive.google.com/file/d/1jwwkjhW0NPxJckX-hGqz97KF_XAWRD7t/view?usp=sharing" 
+                        class="brand-image img-circle elevation-3" style="opacity: .8" width="5%"> &nbsp;
+                        PT Gasaba Sukses Mandiri
                         <small class="float-right tgl">Tanggal :
                             {{ Sistem::konversiTanggal(\Carbon\Carbon::now()) }}</small>
                     </h4>

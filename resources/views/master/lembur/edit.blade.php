@@ -29,6 +29,7 @@
                                     </div>
                                     <form id="form" action="{{ url('master/lembur-update/'.$lembur->kd_lembur) }}" method="POST">
                                     @csrf
+                                    @method('PUT') 
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">

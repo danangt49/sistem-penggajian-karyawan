@@ -21,7 +21,7 @@ class TunjanganSkillController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             return view('master.tunjangan.home');
         } else {
             return view('error.404');
@@ -140,11 +140,11 @@ class TunjanganSkillController extends Controller
 
     public function cetak_all()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $all = TunjanganSkill::get();
 
             $pdf = PDF::loadview('master/tunjangan/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan Data Tunjangan Skill ' . Sistem::konversiTanggal(Carbon::now()));
+            return $pdf->download('Keseluruhan_Data_Tunjangan_Skill'.'.pdf');
         } else {
             return view('error.404');
         }

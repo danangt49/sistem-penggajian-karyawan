@@ -71,6 +71,7 @@
                                                 <form class="form-horizontal" id="profile" method="POST"
                                                     action="{{ url('profil-update/' . Auth::user()->id) }}">
                                                     @csrf
+                                                    @method('PUT') 
                                                     <div class="form-group row">
                                                         <label for="name" class="col-sm-2 col-form-label">Nama</label>
                                                         <div class="col-sm-10">
@@ -107,6 +108,7 @@
                                                 <form class="form-horizontal" id="password" method="POST"
                                                     action="{{ url('password-update/' . Auth::user()->id) }}">
                                                     @csrf
+                                                    @method('PUT') 
                                                     <div class="form-group row">
                                                         <label for="current_password"
                                                             class="col-sm-2 col-form-label">Password Lama</label>

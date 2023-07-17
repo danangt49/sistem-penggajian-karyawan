@@ -20,7 +20,7 @@ class KehadiranController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             return view('master.kehadiran.home');
         } else {
             return view('error.404');
@@ -128,11 +128,11 @@ class KehadiranController extends Controller
 
     public function cetak_all()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $all = Kehadiran::get();
 
             $pdf = PDF::loadview('master/kehadiran/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan Data Kehadiran ' . Sistem::konversiTanggal(Carbon::now()));
+            return $pdf->download('Keseluruhan_Data_Kehadiran'.'.pdf');
         } else {
             return view('error.404');
         }

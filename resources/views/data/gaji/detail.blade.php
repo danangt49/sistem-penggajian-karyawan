@@ -25,7 +25,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <h4>
-                                                <img src="{{ asset('public/img/logo.png') }}" alt="AdminLTE Logo"
+                                                <img src="{{ asset('public/img/logo.png') }}" 
                                                 class="brand-image img-circle elevation-3" style="opacity: .8" width="5%"> &nbsp;
                                                 PT Gasaba Sukses Mandiri
                                                 <small class="float-right">Tanggal :

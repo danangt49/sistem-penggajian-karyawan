@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isAdmin', function ($user) {
             return $user->level === 'admin';
         });
-        Gate::define('isUser', function ($user) {
+        Gate::define('isDirektur', function ($user) {
             return $user->level === 'user';
         });
         Gate::define('isPegawai', function ($user) {

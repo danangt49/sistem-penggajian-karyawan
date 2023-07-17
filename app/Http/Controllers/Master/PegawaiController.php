@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use PDF;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
 
 class PegawaiController extends Controller
 {
@@ -22,7 +23,7 @@ class PegawaiController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             return view('master.pegawai.home');
         } else {
             return view('error.404');
@@ -47,14 +48,14 @@ class PegawaiController extends Controller
                 return Sistem::formatRupiah($row->gaji_pokok);
             })
             ->addColumn('action', function ($row) {
-                $btn = '<a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="pegawai/' .$row->nip .'"><i class="fas fa-tools"></i></a>';
-                $btn2 = '<button data-id="' .$row->nip .'" data-toggle="tooltip" title="Edit Status Data" class="btn btn-sm update"><i class="fas fa-paper-plane"></i></button>';
-                $btn3 = '<button data-id="' .$row->nip .'" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>';
+                $btn = '<a class="btn btn-sm" data-toggle="tooltip" title="Edit Data" href="pegawai/' . $row->nip . '"><i class="fas fa-tools"></i></a>';
+                $btn2 = '<button data-id="' . $row->nip . '" data-toggle="tooltip" title="Edit Status Data" class="btn btn-sm update"><i class="fas fa-paper-plane"></i></button>';
+                $btn3 = '<button data-id="' . $row->nip . '" data-toggle="tooltip" title="Hapus Data" class="btn btn-sm delete"><i class="fas fa-trash-restore"></i></button>';
 
-                if($row->status == 'Belum Aktif') {
-                    return $btn. $btn3;
+                if ($row->status == 'Belum Aktif') {
+                    return $btn . $btn3;
                 } else {
-                    return $btn. $btn2. $btn3;
+                    return $btn . $btn2 . $btn3;
                 }
             })
             ->rawColumns(['action'])
@@ -73,6 +74,11 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         if (Gate::allows('isAdmin')) {
+            $existingPegawai = Pegawai::where('nip', $request->nip)->first();
+            if ($existingPegawai) {
+                return redirect('master/pegawai')->with('error', 'Nip Sudah Digunakan');
+            }
+
             $data = [
                 'nip' => $request->nip,
                 'kd_jabatan' => $request->kd_jabatan,
@@ -103,28 +109,26 @@ class PegawaiController extends Controller
 
     public function updateStatus($nip)
     {
-        // dd($request);
         if (Gate::allows('isAdmin')) {
             $pegawai = Pegawai::where('nip', $nip)->first();
             if ($pegawai->status == 'Aktif' || $pegawai->status == 'Belum Aktif') {
                 $data = [
-                    'status' => 'Tidak Aktif'
+                    'status' => 'Tidak Aktif',
                 ];
 
                 $data2 = [
-                    'status' => 'TIDAK'
+                    'status' => 'TIDAK',
                 ];
-
             } else {
                 $data = [
-                    'status' => 'Aktif'
+                    'status' => 'Aktif',
                 ];
 
                 $data2 = [
-                    'status' => 'AKTIF'
+                    'status' => 'AKTIF',
                 ];
             }
-           
+
             Pegawai::where('nip', $nip)->update($data);
             User::where('name', $pegawai->nm_pegawai)->update($data2);
             return redirect('master/pegawai');
@@ -136,6 +140,15 @@ class PegawaiController extends Controller
     public function update(Request $request)
     {
         if (Gate::allows('isAdmin')) {
+            // $existingPegawai = Pegawai::where('nip', '!=', $request->nip)->exists();
+
+            // Log::info($existingPegawai);
+            // Log::info($request);
+
+            // if ($existingPegawai) {
+            //     return redirect('master/pegawai')->with('error', 'NIP Sudah Digunakan');
+            // }
+
             $data = [
                 'nip' => $request->nip,
                 'kd_jabatan' => $request->kd_jabatan,
@@ -167,11 +180,11 @@ class PegawaiController extends Controller
 
     public function cetak_all()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $all = Pegawai::get();
 
             $pdf = PDF::loadview('master/pegawai/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan Data Pegawai ' . Sistem::konversiTanggal(Carbon::now()));
+            return $pdf->download('Keseluruhan_Data_Pegawai'.'pdf');
         } else {
             return view('error.404');
         }

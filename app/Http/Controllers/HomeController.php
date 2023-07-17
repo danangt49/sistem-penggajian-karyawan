@@ -32,7 +32,7 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $data['total_gaji'] = Pegawai::count();
             $data['total_pegawai'] = Pegawai::count();
             $data['total_kasbon'] = Kasbon::count();
@@ -87,7 +87,7 @@ class HomeController extends Controller
 
         $pdf = PDF::loadView('download', compact('all', 'start_date', 'end_date'));
 
-        $filename = 'Jurnal Umum.pdf';
+        $filename = 'Jurnal_Umum.pdf';
 
         return $pdf->download($filename);
     }

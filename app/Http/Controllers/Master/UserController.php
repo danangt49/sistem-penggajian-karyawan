@@ -22,7 +22,7 @@ class UserController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             return view('master.user.home');
         } else {
             return view('error.404');
@@ -68,19 +68,30 @@ class UserController extends Controller
                 return redirect('master/user')->with('error', 'Email Sudah Dipake');
             }
 
-            $data = [
-                'name' => $request->name,
-                'level' => $request->level,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-            ];
+            $pegawai = Pegawai::where('nip', $request->nip)->first();
+            if ($request->level == 'pegawai') { 
+                $data = [
+                    'name' => $pegawai->nm_pegawai,
+                    'nip' => $pegawai->nip,
+                    'level' => $request->level,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ];
+            } else {
+                $data = [
+                    'name' => $request->name,
+                    'level' => $request->level,
+                    'email' => $request->email,
+                    'password' => Hash::make($request->password),
+                ];
+            }
 
             $data2 = [
                 'status' => 'Aktif',
             ];
 
             User::create($data);
-            Pegawai::where('nm_pegawai', $request->name)->update($data2);
+            Pegawai::where('nip', $request->nip)->update($data2);
             return redirect('master/user')->with('success', 'Data Sukses Ditambahkan');
         } else {
             return view('error.404');
@@ -107,10 +118,11 @@ class UserController extends Controller
             if ($exiting) {
                 return redirect('master/user')->with('error', 'Email Sudah Dipake');
             }
-
+            $pegawai = Pegawai::where('nip', $request->nip)->first();
             if ($request->level != null) {
                 $data = [
-                    'name' => $request->name,
+                    'name' => $pegawai->nm_pegawai,
+                    'nip' => $pegawai->nip,
                     'level' => $request->level,
                     'email' => $request->email,
                 ];
@@ -169,11 +181,11 @@ class UserController extends Controller
 
     public function cetak_all()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $all = User::get();
 
             $pdf = PDF::loadview('master/user/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan Data User ' . Sistem::konversiTanggal(Carbon::now()));
+            return $pdf->download('Keseluruhan_Data_User'.'.pdf');
         } else {
             return view('error.404');
         }

@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
     {
         User::create([
             'id'	    => 1,
+            'nip'	    => null,
             'name'	    => 'Admin',
             'email'	    => 'admin@gmail.com',
             'password'	=> bcrypt('secret'),
@@ -24,10 +25,11 @@ class UserSeeder extends Seeder
 
         User::create([
             'id'	    => 2,
+            'nip'	    => null,
             'name'	    => 'Direktur',
             'email'	    => 'direktur@gmail.com',
             'password'	=> bcrypt('secret'),
-            'level'     => 'user'
+            'level'     => 'direktur'
         ]);
     }
 }

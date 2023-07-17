@@ -27,6 +27,7 @@
                                     </div>
                                     <form id="form" action="{{ url('gaji-update/'.$gaji->no_slip_gaji) }}" method="POST">
                                     @csrf
+                                    @method('PUT') 
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">

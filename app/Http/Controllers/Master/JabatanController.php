@@ -20,7 +20,7 @@ class JabatanController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             return view('master.jabatan.home');
         } else {
             return view('error.404');
@@ -130,11 +130,11 @@ class JabatanController extends Controller
 
     public function cetak_all()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $all = Jabatan::get();
 
             $pdf = PDF::loadview('master/jabatan/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan Data Jabatan ' . Sistem::konversiTanggal(Carbon::now()));
+            return $pdf->download('Keseluruhan_Data_Jabatan'.'.pdf');
         } else {
             return view('error.404');
         }

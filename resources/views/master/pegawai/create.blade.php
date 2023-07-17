@@ -36,7 +36,7 @@
                                                     <div class="form-group">
                                                         <label for="nip">NIP</label>
                                                         <input type="number" class="form-control" id="nip"
-                                                            name="nip" value="{{ Sistem::generateNip() }}">
+                                                            name="nip" value="{{ Sistem::generateNip() }}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">

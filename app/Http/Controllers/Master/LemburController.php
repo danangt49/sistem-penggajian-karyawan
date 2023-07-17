@@ -21,7 +21,7 @@ class LemburController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             return view('master.lembur.home');
         } else {
             return view('error.404');
@@ -141,11 +141,11 @@ class LemburController extends Controller
 
     public function cetak_all()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $all = Lembur::get();
 
             $pdf = PDF::loadview('master/lembur/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan Data Lembur ' . Sistem::konversiTanggal(Carbon::now()));
+            return $pdf->download('Keseluruhan_Data_Lembur'.'.pdf');
         } else {
             return view('error.404');
         }

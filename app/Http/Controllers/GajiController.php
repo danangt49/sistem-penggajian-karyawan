@@ -27,7 +27,7 @@ class GajiController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             return view('gaji.home');
         } else {
             return view('error.404');
@@ -68,7 +68,7 @@ class GajiController extends Controller
                     if (date('m-y', strtotime($row->tanggal_gaji)) < Carbon::now()->format('m-y')) {
                         return $btn2;
                     } else {
-                        return $btn1 . $btn2;
+                        return  $btn2;
                     }
                 } else {
                     return $btn1 . $btn2 . $btn3;
@@ -261,7 +261,7 @@ class GajiController extends Controller
 
     public function detail($no_slip_gaji)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $data['detail'] = Gaji::where('no_slip_gaji', $no_slip_gaji)->first();
             return view('gaji.detail')->with($data);
         } else {
@@ -271,11 +271,11 @@ class GajiController extends Controller
 
     public function cetak_pdf($no_slip_gaji)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $detail = Gaji::where('no_slip_gaji', $no_slip_gaji)->first();
 
             $pdf = PDF::loadview('gaji/cetak', ['detail' => $detail]);
-            return $pdf->download('Slip Gaji ' . $detail->pegawai->nm_pegawai . ' ' . $no_slip_gaji);
+            return $pdf->download('Slip_Gaji_' . $detail->pegawai->nm_pegawai . '_' . $no_slip_gaji.'.pdf');
         } else {
             return view('error.404');
         }
@@ -283,11 +283,11 @@ class GajiController extends Controller
 
     public function cetak_all()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $all = Gaji::get();
 
             $pdf = PDF::loadview('gaji/cetak-all', ['all' => $all]);
-            return $pdf->download('Laporan All Gaji ' . Sistem::konversiTanggal(Carbon::now()));
+            return $pdf->download('Laporan_All_Gaji'.'.pdf');
         } else {
             return view('error.404');
         }

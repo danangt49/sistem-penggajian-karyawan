@@ -31,12 +31,13 @@
                                     </div>
                                     <form id="form" action="{{ url('master/pegawai-update/'.$pegawai->nip) }}" method="POST">
                                     @csrf
+                                    @method('PUT') 
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="nip">NIP</label>
-                                                        <input type="number" class="form-control" id="nip" name="nip" value="{{ $pegawai->nip }}">
+                                                        <input type="number" class="form-control" id="nip" name="nip" value="{{ $pegawai->nip }}" readonly>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6 mb-3">

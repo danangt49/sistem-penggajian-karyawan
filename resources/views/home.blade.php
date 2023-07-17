@@ -104,20 +104,17 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <p>Diagram Batang & Jurnal Umum</p> 
-                                        <hr>
                                         <form id="filter-form" action="{{ route('home') }}" method="GET">
                                             <div class="form-row">
-                                                <div class="col-md-4 mb-3">
-                                                    <label for="start_date">Dari</label>
+                                                <div class="col-md-2 mb-3">
                                                     <input type="date" class="form-control" id="start_date"
                                                         name="start_date" value="{{ $start_date }}">
                                                 </div>
-                                                <div class="col-md-4 mb-3">
-                                                    <label for="end_date">Sampai</label>
+                                                <div class="col-md-2 mb-3">
                                                     <input type="date" class="form-control" id="end_date"
                                                         name="end_date" value="{{ $end_date }}">
                                                 </div>
-                                                <div class="col-md-4 mb-3">
+                                                <div class="col-md-8 mb-3">
                                                     <button type="submit"
                                                         class="btn btn-primary float-right"><i
                                                         class="fas fa-filter"></i>Filter</button>

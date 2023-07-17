@@ -31,7 +31,7 @@ class GajiController extends Controller
 
     public function json()
     {
-        $pegawai = Pegawai::where('nm_pegawai', Auth::user()->name)->first();
+        $pegawai = Pegawai::where('nip', Auth::user()->nip)->first();
         $data = Gaji::where('nip', $pegawai->nip)
             ->orderBy('created_at', 'DESC')
             ->get();
@@ -70,39 +70,11 @@ class GajiController extends Controller
     public function detail($no_slip_gaji)
     {
         if (Gate::allows('isPegawai')) {
-            $pegawai = Pegawai::where('nm_pegawai', Auth::user()->name)->first();
+            $pegawai = Pegawai::where('nip', Auth::user()->nip)->first();
             $data = Gaji::where('nip', $pegawai->nip)
                 ->where('no_slip_gaji', $no_slip_gaji)
                 ->first();
             return view('data.gaji.detail')->with('detail', $data);
-        } else {
-            return view('error.404');
-        }
-    }
-
-    public function cetak_pdf($no_slip_gaji)
-    {
-        if (Gate::allows('isPegawai')) {
-            $pegawai = Pegawai::where('nm_pegawai', Auth::user()->name)->first();
-            $detail = Gaji::where('nip', $pegawai->nip)
-                ->where('no_slip_gaji', $no_slip_gaji)
-                ->first();
-
-            $pdf = PDF::loadview('data/gaji/cetak', ['detail' => $detail]);
-            return $pdf->download('Slip Gaji ' . $detail->pegawai->nm_pegawai . ' ' . $no_slip_gaji . '.pdf');
-        } else {
-            return view('error.404');
-        }
-    }
-
-    public function cetak_all()
-    {
-        if (Gate::allows('isPegawai')) {
-            $pegawai = Pegawai::where('nm_pegawai', Auth::user()->name)->first();
-            $all = Gaji::where('nip', $pegawai->nip)->get();
-
-            $pdf = PDF::loadview('data.gaji/cetak-all', ['all' => $all]);
-            return $pdf->download('Laporan All Gaji ' . Sistem::konversiTanggal(Carbon::now()) . '.pdf');
         } else {
             return view('error.404');
         }

@@ -110,7 +110,7 @@
                             } else if(data == "pegawai") {
                                 return '<span class="badge badge-info">Pegawai</span>';
                             } else {
-                                return '<span class="badge badge-danger">User</span>';
+                                return '<span class="badge badge-danger">Direktur</span>';
                             }
                         }
                     },

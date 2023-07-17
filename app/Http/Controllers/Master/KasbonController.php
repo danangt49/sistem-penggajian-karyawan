@@ -21,7 +21,7 @@ class KasbonController extends Controller
 
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             return view('master.kasbon.home');
         } else {
             return view('error.404');
@@ -137,11 +137,11 @@ class KasbonController extends Controller
 
     public function cetak_all()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isUser')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDirektur')) {
             $all = Kasbon::get();
 
             $pdf = PDF::loadview('master/kasbon/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan Data Kasbon ' . Sistem::konversiTanggal(Carbon::now()));
+            return $pdf->download('Keseluruhan_Data_Kasbon'.'.pdf');
         } else {
             return view('error.404');
         }

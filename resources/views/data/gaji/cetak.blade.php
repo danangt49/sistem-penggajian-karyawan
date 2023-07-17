@@ -29,7 +29,8 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="page-header">
-                        <i class="fas fa-globe"></i> PT Gasaba Sukses Mandiri
+                        <img src="{{ asset('public/img/logo.png') }}" 
+                        class="brand-image img-circle elevation-3" style="opacity: .8" width="5%"> &nbsp; PT Gasaba Sukses Mandiri
                         <small class="float-right tgl">Tanggal :
                             {{ Sistem::konversiTanggal(\Carbon\Carbon::now()) }}</small>
                     </h4>
@@ -61,7 +62,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 table-responsive">
                     <table class="table table-bordered">
                         <thead>
                             <tr align="center">

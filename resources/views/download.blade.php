@@ -71,16 +71,15 @@
                                     $total_debit += $item->debit;
                                 @endphp
                                 <tr align="center">
-                                    <td>{{ $item->bulan_tahun }}</td>
+                                    <td rowspan="2" style="vertical-align : middle;text-align:center;">{{ $item->bulan_tahun }}</td>
                                     <td>Biaya Gaji</td>
-                                    <td></td>
                                     <td>Rp. {{ Sistem::formatRupiah($item->debit) }}</td>
+                                    <td></td>
                                 </tr>
                                 <tr align="center">
-                                    <td>{{ $item->bulan_tahun }}</td>
                                     <td>Kas</td>
-                                    <td>Rp. {{ Sistem::formatRupiah($item->kredit) }}</td>
                                     <td></td>
+                                    <td>Rp. {{ Sistem::formatRupiah($item->kredit) }}</td>
                                 </tr>
                             @endforeach
                             <tr align="center">

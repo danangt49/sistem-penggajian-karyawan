@@ -40,7 +40,7 @@
                                                             <option value="">=== Pilih Level ===</option>
                                                             <option value="admin">Admin</option>
                                                             <option value="pegawai">Pegawai</option>
-                                                            <option value="user">User</option>
+                                                            <option value="direktur">Direktur</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -98,7 +98,7 @@
             .then(response => response.json())
             .then(data => {
                 var selectNama = document.createElement('select');
-                selectNama.setAttribute('name', 'name');
+                selectNama.setAttribute('name', 'nip');
                 selectNama.setAttribute('class', 'custom-select');
 
                 var defaultOption = document.createElement('option');
@@ -108,13 +108,13 @@
 
                 data.forEach(item => {
                     var option = document.createElement('option');
-                    option.value = item.nm_pegawai;
+                    option.value = item.nip;
                     option.text = item.nm_pegawai;
                     selectNama.appendChild(option);
                 });
 
                 inputNama.parentNode.replaceChild(selectNama, inputNama);
-                inputNama = selectNama; // Update reference to the new input element
+                inputNama = selectNama;
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -125,7 +125,7 @@
         inputNamaNew.setAttribute('name', 'name');
         inputNamaNew.setAttribute('class', 'form-control');
         inputNama.parentNode.replaceChild(inputNamaNew, inputNama);
-        inputNama = inputNamaNew; // Update reference to the new input element
+        inputNama = inputNamaNew;
     }
 }
 

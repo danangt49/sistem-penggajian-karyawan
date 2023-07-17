@@ -29,6 +29,7 @@
                                     </div>
                                     <form id="form" action="{{ url('master/jabatan-update/'.$jabatan->kd_jabatan) }}" method="POST">
                                     @csrf
+                                    @method('PUT') 
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-6 mb-3">
