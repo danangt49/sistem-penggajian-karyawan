@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="page-header">
-                        <img src="https://drive.google.com/file/d/1jwwkjhW0NPxJckX-hGqz97KF_XAWRD7t/view?usp=sharing" 
+                        <img src="{{ public_path("public/img/logo.png") }}" 
                         class="brand-image img-circle elevation-3" style="opacity: .8" width="5%"> &nbsp;
                         PT Gasaba Sukses Mandiri
                         <small class="float-right tgl">Tanggal :
