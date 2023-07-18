@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->level === 'admin';
         });
         Gate::define('isDirektur', function ($user) {
-            return $user->level === 'user';
+            return $user->level === 'direktur';
         });
         Gate::define('isPegawai', function ($user) {
             return $user->level === 'pegawai';

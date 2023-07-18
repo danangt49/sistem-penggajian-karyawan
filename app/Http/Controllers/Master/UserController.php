@@ -145,10 +145,10 @@ class UserController extends Controller
         if (Gate::allows('isAdmin')) {
             $data = User::find($id);
             $data2 = [
-                'status' => 'Aktif',
+                'status' => 'Belum Aktif',
             ];
 
-            Pegawai::where('nm_pegawai', $data->name)->update($data2);
+            Pegawai::where('nip', $data->nip)->update($data2);
             $data->delete();
             return redirect('master/user');
         } else {

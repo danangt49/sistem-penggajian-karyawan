@@ -18,7 +18,7 @@ class Level
     {
         if (($request->user()->level == 'admin' && $request->user()->status == 'AKTIF') || 
             ($request->user()->level == 'pegawai' && $request->user()->status == 'AKTIF') ||
-            ($request->user()->level == 'user' && $request->user()->status == 'AKTIF')) {
+            ($request->user()->level == 'direktur' && $request->user()->status == 'AKTIF')) {
             return $next($request);
         }
  

@@ -109,15 +109,6 @@
                                             </table>
                                         </div>
                                     </div>
-                                    <div class="row no-print">
-                                        <div class="col-12">
-                                            <a href="{{ url('data/gaji-cetak-pdf/' . $detail->no_slip_gaji) }}" rel="noopener"
-                                                target="_blank" class="btn btn-success float-right"><i
-                                                    class="fas fa-print"></i>
-                                                Cetak</a>
-                                            </button>
-                                        </div>
-                                    </div>
                                 </div>
 
                             </div>

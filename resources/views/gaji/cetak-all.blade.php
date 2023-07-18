@@ -75,7 +75,7 @@
                                     <td>{{ Sistem::formatRupiah($item->total_gaji_pokok) }}</td>
                                     <td>{{ $item->detailGaji->kehadiran->jumlah_kehadiran }} /
                                         {{ $item->detailGaji->kehadiran->jumlah_hari_kerja_kalender }}</td>
-                                    <td>{{ Sistem::formatRupiah($item->detailGaji->total_gaji) }}</td>
+                                    <td>{{ Sistem::formatRupiah($item->total_gaji) }}</td>
                                     <td>{{ $item->detailGaji->tunjangan->nm_tunjangan_skill }}</td>
                                     <td>{{ $item->detailGaji->lembur->jumlah_jam_lembur }}/{{ Sistem::formatRupiah($item->detailGaji->lembur->biaya_lembur_perjam) }}
                                     </td>

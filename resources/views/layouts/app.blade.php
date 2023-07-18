@@ -68,7 +68,7 @@
                         <a href="{{ url('profil') }}" class="d-block">{{ auth::user()->name }}</a>
                     </div>
                 </div>
-                @if (Auth::user()->level == 'admin' || Auth::user()->level == 'user')
+                @if (Auth::user()->level == 'admin' || Auth::user()->level == 'direktur')
                     <nav class="mt-2">
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                             data-accordion="false">
@@ -153,7 +153,7 @@
                                 <a href="{{ url('/') }}"
                                     class="nav-link {{ request()->is('/') || request()->is('home') || request()->is('dashboard') ? 'active' : '' }}">
                                     <i class="nav-icon fas fa-home"></i>
-                                    <p>Dashboard</p>
+                                    <p>Gaji</p>
                                 </a>
                             </li>
                         </ul>

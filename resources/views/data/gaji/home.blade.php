@@ -24,8 +24,6 @@
                                 <div class="card">
                                     <div class="card-header">
                                         <h3 class="card-title">Data Gaji</h3>
-                                        <a href="{{ url('data/gaji-cetak-all-pdf') }}" class="btn btn-success float-right"
-                                            style="margin-right: 10px;"><i class="fas fa-print"></i> Cetak</a>
                                     </div>
                                     <div class="card-body">
                                         <table id="datatable" class="table table-bordered table-striped text-center">
