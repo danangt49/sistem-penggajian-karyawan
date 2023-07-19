@@ -98,11 +98,11 @@
                     required: "Nama Harus Di isi!",
                 },
                 jumlah_kasbon: {
-                    required: "Jumlah Jam Harus Di isi!"
+                    required: "Jumlah Kasbon Harus Di isi!",
                     number: "Harus Berupa Angka"
                 },
                 keterangan: {
-                    required: "Biaya Harus Di isi!"
+                    required: "Keterangan Harus Di isi!"
                 },
             },
             errorElement: 'span',

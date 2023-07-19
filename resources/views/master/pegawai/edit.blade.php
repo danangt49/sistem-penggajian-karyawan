@@ -164,6 +164,9 @@
                 nm_pegawai: {
                     required: true,
                 },
+                kd_jabatan: {
+                    required: true,
+                },
                 tanggal_lahir: {
                     required: true,
                 },
@@ -178,6 +181,9 @@
                     required: true,
                     number: true
                 },
+                alamat: {
+                    required: true
+                },
             },
             messages: {
                 nip: {
@@ -186,6 +192,9 @@
                 },
                 nm_pegawai: {
                     required: "Nama Harus Di isi!"
+                },
+                kd_jabatan: {
+                    required: "Jabatan Harus Di isi!",
                 },
                 tanggal_lahir: {
                     required: "Tanggal Lahir Harus Di isi!",
@@ -200,6 +209,9 @@
                 gaji_pokok: {
                     required: "Gaji Pokok Harus Di isi!",
                     number: "Harus Berupa Angka"
+                },
+                alamat: {
+                    required: "Alamat Harus Di isi!",
                 },
             },
             errorElement: 'span',

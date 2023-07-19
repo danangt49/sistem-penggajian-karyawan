@@ -33,7 +33,7 @@
             <div class="row">
                 <div class="col-12">
                     <h4 class="page-header">
-                        <i class="fas fa-globe"></i>Keseluruhan Data User <br> PT Gasaba Sukses Mandiri
+                        <i class="fas fa-globe"></i>Laporan Keseluruhan Data User <br> PT Gasaba Sukses Mandiri
                     </h4>
                 </div>
             </div>
