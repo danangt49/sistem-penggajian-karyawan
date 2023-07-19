@@ -144,7 +144,7 @@ class TunjanganSkillController extends Controller
             $all = TunjanganSkill::get();
 
             $pdf = PDF::loadview('master/tunjangan/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan_Data_Tunjangan_Skill'.'.pdf');
+            return $pdf->download('Laporan_Keseluruhan_Data_Tunjangan_Skill'.'.pdf');
         } else {
             return view('error.404');
         }

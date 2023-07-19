@@ -140,15 +140,6 @@ class PegawaiController extends Controller
     public function update(Request $request)
     {
         if (Gate::allows('isAdmin')) {
-            // $existingPegawai = Pegawai::where('nip', '!=', $request->nip)->exists();
-
-            // Log::info($existingPegawai);
-            // Log::info($request);
-
-            // if ($existingPegawai) {
-            //     return redirect('master/pegawai')->with('error', 'NIP Sudah Digunakan');
-            // }
-
             $data = [
                 'nip' => $request->nip,
                 'kd_jabatan' => $request->kd_jabatan,
@@ -184,7 +175,7 @@ class PegawaiController extends Controller
             $all = Pegawai::get();
 
             $pdf = PDF::loadview('master/pegawai/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan_Data_Pegawai'.'pdf');
+            return $pdf->download('Laporan_Keseluruhan_Data_Pegawai'.'pdf');
         } else {
             return view('error.404');
         }

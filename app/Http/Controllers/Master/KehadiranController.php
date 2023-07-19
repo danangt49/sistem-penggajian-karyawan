@@ -132,7 +132,7 @@ class KehadiranController extends Controller
             $all = Kehadiran::get();
 
             $pdf = PDF::loadview('master/kehadiran/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan_Data_Kehadiran'.'.pdf');
+            return $pdf->download('Laporan_Keseluruhan_Data_Kehadiran'.'.pdf');
         } else {
             return view('error.404');
         }

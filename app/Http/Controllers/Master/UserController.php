@@ -185,7 +185,7 @@ class UserController extends Controller
             $all = User::get();
 
             $pdf = PDF::loadview('master/user/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan_Data_User'.'.pdf');
+            return $pdf->download('Laporan_Keseluruhan_Data_User'.'.pdf');
         } else {
             return view('error.404');
         }

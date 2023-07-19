@@ -134,7 +134,7 @@ class JabatanController extends Controller
             $all = Jabatan::get();
 
             $pdf = PDF::loadview('master/jabatan/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan_Data_Jabatan'.'.pdf');
+            return $pdf->download('Laporan_Keseluruhan_Data_Jabatan'.'.pdf');
         } else {
             return view('error.404');
         }

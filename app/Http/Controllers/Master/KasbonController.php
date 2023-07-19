@@ -141,7 +141,7 @@ class KasbonController extends Controller
             $all = Kasbon::get();
 
             $pdf = PDF::loadview('master/kasbon/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan_Data_Kasbon'.'.pdf');
+            return $pdf->download('Laporan_Keseluruhan_Data_Kasbon'.'.pdf');
         } else {
             return view('error.404');
         }

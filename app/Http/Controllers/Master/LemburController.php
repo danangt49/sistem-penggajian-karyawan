@@ -145,7 +145,7 @@ class LemburController extends Controller
             $all = Lembur::get();
 
             $pdf = PDF::loadview('master/lembur/cetak-all', ['all' => $all]);
-            return $pdf->download('Keseluruhan_Data_Lembur'.'.pdf');
+            return $pdf->download('Laporan_Keseluruhan_Data_Lembur'.'.pdf');
         } else {
             return view('error.404');
         }
