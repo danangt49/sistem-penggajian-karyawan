@@ -16,62 +16,62 @@ class JabatanSeeder extends Seeder
     {
         Jabatan::create([
             'nm_jabatan' => 'Chief Sewing',
-            'total_gaji' => '3000000',
+            'nominal_jabatan' => '3000000',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'HRD',
-            'total_gaji' => '3000000',
+            'nominal_jabatan' => '3000000',
         ]);
        
         Jabatan::create([
             'nm_jabatan' => 'SPV Line',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'Adm Line',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'Gudang',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'SPV QC',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'SPV Finishing',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'Security',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'Operator Sewing',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'SPV Cutting',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'Bagian Administrasi',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
 
         Jabatan::create([
             'nm_jabatan' => 'Cutting',
-            'total_gaji' => '1940890',
+            'nominal_jabatan' => '1940890',
         ]);
     }
 }

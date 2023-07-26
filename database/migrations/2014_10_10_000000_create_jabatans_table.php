@@ -16,7 +16,7 @@ class CreateJabatansTable extends Migration
         Schema::create('jabatans', function (Blueprint $table) {
             $table->increments('kd_jabatan');
             $table->string('nm_jabatan');
-            $table->integer('total_gaji');
+            $table->integer('nominal_jabatan');
             $table->timestamps();
         });
     }

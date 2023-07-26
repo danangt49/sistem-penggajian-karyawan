@@ -10,7 +10,7 @@ class Jabatan extends Model
     protected $fillable = [
         'kd_jabatan',
         'nm_jabatan',
-        'total_gaji'
+        'nominal_jabatan'
     ];
     protected $table = 'jabatans';
 

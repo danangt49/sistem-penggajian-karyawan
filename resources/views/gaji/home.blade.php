@@ -79,6 +79,7 @@
     <script>
         $(document).ready(function() {
             $('#datatable').dataTable({
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ url('json-gaji') }}",

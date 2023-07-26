@@ -48,8 +48,8 @@
                     </div>
                     <div class="col-lg-7">
                         <div class="card-body py-5 px-md-5">
-                            <h4>MASUK KE HALAMAN SISTEM</h4>
-                            <h4>PT. GASABA SUKSES MANDIRI</h4>
+                            <p>MASUK KE HALAMAN SISTEM</p>
+                            <p>PT. GASABA SUKSES MANDIRI</p>
                             <form method="POST" action="{{ route('login') }}" id="form">
                                 @csrf
                                 <!-- Email input -->

@@ -41,9 +41,9 @@
                                                 </div>
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
-                                                        <label for="nm_jabatan">Total Gaji</label>
-                                                        <input type="number" class="form-control" id="total_gaji"
-                                                            name="total_gaji">
+                                                        <label for="nm_jabatan">Nominal Jabatan</label>
+                                                        <input type="number" class="form-control" id="nominal_jabatan"
+                                                            name="nominal_jabatan">
                                                     </div>
                                                 </div>
                                             </div>
@@ -78,7 +78,7 @@
                 nm_jabatan: {
                     required: true,
                 },
-                total_gaji: {
+                nominal_jabatan: {
                     required: true,
                     number: true
                 },
@@ -87,8 +87,8 @@
                 nm_jabatan: {
                     required: "Nama Jabatan Harus Di isi!",
                 },
-                total_gaji: {
-                    required: "Total Gaji Harus Di isi!",
+                nominal_jabatan: {
+                    required: "Nominal Jabatan Harus Di isi!",
                     number: "Harus Berupa Angka"
                 },
             },

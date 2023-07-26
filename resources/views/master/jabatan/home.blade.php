@@ -83,6 +83,7 @@
     <script>
         $(document).ready(function() {
             $('#datatable').dataTable({
+                responsive: true,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ url('master/json-jabatan') }}",
@@ -98,8 +99,8 @@
                         data: 'nm_jabatan'
                     },
                     {
-                        title: 'Total Gaji (Rp.)',
-                        data: 'total_gaji'
+                        title: 'Nominal Jabatan (Rp.)',
+                        data: 'nominal_jabatan'
                     },
                     @if (Auth::user()->level == 'admin')
                         {

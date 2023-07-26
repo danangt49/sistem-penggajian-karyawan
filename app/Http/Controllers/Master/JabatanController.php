@@ -32,8 +32,8 @@ class JabatanController extends Controller
         $data = Jabatan::orderBy('created_at', 'DESC')->get();
         return DataTables::of($data)
             ->addIndexColumn()
-            ->addColumn('total_gaji', function ($row) {
-                return Sistem::formatRupiah($row->total_gaji);
+            ->addColumn('nominal_jabatan', function ($row) {
+                return Sistem::formatRupiah($row->nominal_jabatan);
             })
             ->addColumn('action', function ($row) {
                 $btn =
@@ -62,9 +62,10 @@ class JabatanController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         if (Gate::allows('isAdmin')) {
             $exiting = Jabatan::where('nm_jabatan', $request->nm_jabatan)
-                ->where('total_gaji', $request->total_gaji)
+                ->where('nominal_jabatan', $request->nominal_jabatan)
                 ->exists();
 
             if ($exiting) {
@@ -73,7 +74,7 @@ class JabatanController extends Controller
 
             $data = [
                 'nm_jabatan' => $request->nm_jabatan,
-                'total_gaji' => $request->total_gaji,
+                'nominal_jabatan' => $request->nominal_jabatan,
             ];
 
             Jabatan::create($data);
@@ -98,7 +99,7 @@ class JabatanController extends Controller
         if (Gate::allows('isAdmin')) {
             $exiting = Jabatan::where('kd_jabatan', '!=', $request->kd_jabatan)
                 ->where('nm_jabatan', $request->nm_jabatan)
-                ->where('total_gaji', $request->total_gaji)
+                ->where('nominal_jabatan', $request->nominal_jabatan)
                 ->exists();
 
             if ($exiting) {
@@ -107,7 +108,7 @@ class JabatanController extends Controller
 
             $data = [
                 'nm_jabatan' => $request->nm_jabatan,
-                'total_gaji' => $request->total_gaji,
+                'nominal_jabatan' => $request->nominal_jabatan,
             ];
 
             Jabatan::where('kd_jabatan', $request->kd_jabatan)->update($data);
