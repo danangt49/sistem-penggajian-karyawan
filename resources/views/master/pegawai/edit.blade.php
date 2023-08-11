@@ -71,7 +71,7 @@
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="tanggal_lahir">Tanggal Lahir</label>
-                                                        <div class='input-group date' id='datetimepicker'>
+                                                        <div class='input-group date' id='datetimepicker_tanggal_lahir'>
                                                             <input type='text' class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="{{ $pegawai->tanggal_lahir }}"/>
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -82,7 +82,7 @@
                                                 <div class="col-md-6 mb-3">
                                                     <div class="form-group">
                                                         <label for="tanggal_masuk">Tanggal Masuk</label>
-                                                        <div class='input-group date' id='datetimepicker'>
+                                                        <div class='input-group date' id='datetimepicker_tanggal_masuk'>
                                                             <input type='text' class="form-control" id="tanggal_masuk" name="tanggal_masuk" value="{{ $pegawai->tanggal_masuk }}"/>
                                                             <span class="input-group-addon">
                                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -118,42 +118,56 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('public/admin/asset/plugins/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('public/admin/asset/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
     <script src="{{ asset('public/admin/asset/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('public/admin/asset/plugins/jquery-validation/additional-methods.min.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
-            
+
     <script>
         function myFunction(e) {
             var kd_jabatan = e.target.value;
             var url = "{{ url('master/json-jabatan') }}" + "/" + kd_jabatan;
 
             fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("gaji_pokok").value = data.nominal_jabatan;
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("gaji_pokok").value = data.nominal_jabatan;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
-        $(function () {
-            $("#tanggal_lahir").datepicker({ 
+        $(function() {
+            $("#tanggal_lahir").datepicker({
                 format: 'yyyy-mm-dd',
-                autoclose: true, 
+                autoclose: true,
                 todayHighlight: true
-            }).datepicker();
+            }).datepicker('update', new Date());
         });
 
-        $(function () {
-            $("#tanggal_masuk").datepicker({ 
+        $(function() {
+            $("#tanggal_masuk").datepicker({
                 format: 'yyyy-mm-dd',
-                autoclose: true, 
+                autoclose: true,
                 todayHighlight: true
-            }).datepicker();
+            }).datepicker('update', new Date());
         });
+
+        $.validator.addMethod("validAge", function(value, element) {
+            var tanggalLahir = new Date($("#tanggal_lahir").val());
+            var tanggalMasuk = new Date($("#tanggal_masuk").val());
+
+            // Calculate age difference in years
+            var ageDiff = tanggalMasuk.getFullYear() - tanggalLahir.getFullYear();
+            var monthDiff = tanggalMasuk.getMonth() - tanggalLahir.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && tanggalMasuk.getDate() < tanggalLahir.getDate())) {
+                ageDiff--;
+            }
+
+            return ageDiff >= 18;
+        }, "Usia Pegawai harus 18 tahun keatas");
+
 
         $('#form').validate({
             rules: {
@@ -169,9 +183,11 @@
                 },
                 tanggal_lahir: {
                     required: true,
+                    validAge: true
                 },
                 tanggal_masuk: {
                     required: true,
+                    validAge: true
                 },
                 no_telepon: {
                     required: true,
@@ -215,14 +231,14 @@
                 },
             },
             errorElement: 'span',
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
-            highlight: function (element, errorClass, validClass) {
+            highlight: function(element, errorClass, validClass) {
                 $(element).addClass('is-invalid');
             },
-            unhighlight: function (element, errorClass, validClass) {
+            unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
             }
         });
